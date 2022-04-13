@@ -128,7 +128,7 @@ jobs:
 
     steps:
       - name: Build python package
-        run: make build
+        run: cd /home/python.tufte && make build
 
       - name: Check build package
         run: make check
