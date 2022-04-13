@@ -49,8 +49,8 @@ RUN apt-get update && \
     xz-utils \
     tk-dev \
     libffi-dev \
-    liblzma-dev \
-    python-openssl && \
+    liblzma-dev && \
+    # python-openssl && \
     apt-get clean && \
     apt-get --purge remove -y .\*-doc$ && \
     apt-get clean -y
