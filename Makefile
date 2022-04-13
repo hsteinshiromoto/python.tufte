@@ -66,6 +66,18 @@ image: base_image app_image
 hooks:
 	cp bin/post-checkout .git/hooks/post-checkout
 
+## Build Python package
+build:
+	poetry build
+
+## Check package build
+check:
+	twine check dist/*
+
+## Publish to PyPI
+publish: 
+	poetry publish --username __token__ --password $PYPI_API_TOKEN
+
 # ---
 # Self Documenting Commands
 # ---
