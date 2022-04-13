@@ -1,0 +1,58 @@
+# ---
+# Build arguments
+# ---
+ARG DOCKER_PARENT_IMAGE="python:3.9-slim"
+FROM $DOCKER_PARENT_IMAGE
+
+# NB: Arguments should come after FROM otherwise they're deleted
+ARG BUILD_DATE
+
+# Silence debconf
+ARG DEBIAN_FRONTEND=noninteractive
+
+# ---
+# Enviroment variables
+# ---
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
+ENV TZ Australia/Sydney
+ENV SHELL /bin/bash
+
+# Set container time zone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+LABEL org.label-schema.build-date=$BUILD_DATE \
+        maintainer="Humberto STEIN SHIROMOTO <h.stein.shiromoto@gmail.com>"
+
+# ---
+# Set up the necessary Debian packages
+# ---
+RUN apt-get update && \
+    apt-get install -y build-essential \
+    curl \
+    git \
+    gnupg2 \
+    make \
+    pandoc \
+    sudo \
+    vim \
+    wget \
+    # Pyenv necessary libraries: https://stackoverflow.com/questions/67807596/pyenv-install-3-x-build-failed-ubuntu-20-04-using-python-build-20180424
+    libssl-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    libreadline-dev \
+    libsqlite3-dev \
+    llvm \
+    libncurses5-dev \
+    libncursesw5-dev \
+    xz-utils \
+    tk-dev \
+    libffi-dev \
+    liblzma-dev \
+    python-openssl && \
+    apt-get clean && \
+    apt-get --purge remove -y .\*-doc$ && \
+    apt-get clean -y
+
+ENV PATH /usr/local/texlive/2017/bin/x86_64-linux:$PATH
