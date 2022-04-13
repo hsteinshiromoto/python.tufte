@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "python.tufte"
 version = "0.1.0"
-description = ""
+description = "A Tufte-inspired style for plotting data"
 authors = ["Humberto STEIN SHIROMOTO <h.stein.shiromoto@gmail.com>"]
 
 [tool.poetry.dependencies]
