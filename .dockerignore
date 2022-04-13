@@ -6,3 +6,5 @@ LICENSE
 run.sh
 *.code-workspace
 .devcontainer/*
+.pytest_cache/*
+*/__pycache__/*
