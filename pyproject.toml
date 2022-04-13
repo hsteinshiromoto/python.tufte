@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "python.tufte"
+version = "0.1.0"
+description = ""
+authors = ["Humberto STEIN SHIROMOTO <h.stein.shiromoto@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.4.2"
+numpy = "^1.22.3"
+matplotlib = "^3.5.1"
+typeguard = "^2.13.3"
+Deprecated = "^1.2.13"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.1"
+ipykernel = "^6.13.0"
+jupyterlab = "^3.3.3"
+twine = "^4.0.0"
+Sphinx = "^4.5.0"
+sphinx-rtd-theme = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
