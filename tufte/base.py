@@ -11,6 +11,8 @@ from pkg_resources import yield_lines
 
 
 class Canvas:
+    """Defines the figure container"""
+
     def __init__(
         self,
         plot_type: str,
@@ -27,6 +29,7 @@ class Canvas:
             self.ax = ax
 
     def set_spines(self):
+        """Set figure spines"""
         self.ax.tick_params(
             axis="both",
             top="off",
@@ -67,6 +70,14 @@ class Canvas:
         ylim: tuple = None,
         ybound: tuple = None,
     ):
+        """Defines axes limits and spines lengths
+
+        Args:
+            xlim (tuple, optional): Max and min values of x spine. Defaults to None.
+            xbound (tuple, optional): Max and min values of x limits. Defaults to None.
+            ylim (tuple, optional): Max and min values of y spine. Defaults to None.
+            ybound (tuple, optional): Max and min values of y limits. Defaults to None.
+        """
 
         if bool(xlim) & bool(xbound):
             self.ax.set_xlim(xmin=min(xlim), xmax=max(xlim))
@@ -109,6 +120,15 @@ class Canvas:
 
     @staticmethod
     def fit_axis_range(array: Iterable[int | float], pad: float):
+        """Calculates spine and limits of a given array to be ploted
+
+        Args:
+            array (Iterable[int  |  float]): Array to be plotted.
+            pad (float): Additional padding to the limits.
+
+        Returns:
+            float: Bounds of spine and limits of the plot.
+        """
 
         array_min = array.min().min()
         array_max = array.max().max()
