@@ -54,7 +54,7 @@ class Canvas:
             self.ax.spines["bottom"].set_linewidth(0.75)
             self.ax.spines["bottom"].set_edgecolor("LightGray")
 
-        elif self.plot_type.lower() == "bplot":
+        elif self.plot_type.lower() == "box":
             self.ax.spines["left"].set_visible(False)
             self.ax.spines["bottom"].set_visible(False)
             self.ax.tick_params(axis="y", left="on")
