@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from collections.abc import Iterable
+from re import X
 from typing import Union
 
 import matplotlib.pyplot as plt
@@ -13,27 +14,19 @@ class Canvas:
     def __init__(
         self,
         plot_type: str,
-        x: Iterable[int | float] = None,
-        y: Iterable[int | float] = None,
         figsize: tuple = (20, 10),
         ax: Axes = None,
-        pad: float = 0.05,
         fontsize: int = 12,
     ):
-        self.plot_type = plot_type
-        self.x = x
-        self.y = y
-        self.pad = pad
         self.fontsize = fontsize
+        self.plot_type = plot_type
         if not ax:
             self.fig, self.ax = plt.subplots(figsize=figsize)
 
         else:
             self.ax = ax
 
-    def set_spines(
-        self,
-    ):
+    def set_spines(self):
         self.ax.tick_params(
             axis="both",
             top="off",
@@ -67,6 +60,53 @@ class Canvas:
 
         return None
 
+    def set_axis(
+        self,
+        xlim: tuple = None,
+        xbound: tuple = None,
+        ylim: tuple = None,
+        ybound: tuple = None,
+    ):
+
+        if bool(xlim) & bool(xbound):
+            self.ax.set_xlim(xmin=min(xlim), xmax=max(xlim))
+            self.ax.spines["bottom"].set_bounds(min(xbound), max(xbound))
+
+        if bool(ylim) & bool(ybound):
+            if self.plot_type.lower() == "bar":
+                self.ax.set_ylim(ymin=0, ymax=max(ylim))
+                self.ax.spines["left"].set_bounds(0, max(ybound))
+
+            else:
+                self.ax.set_ylim(min(ylim), max(ylim))
+                self.ax.spines["left"].set_bounds(min(ybound), max(ybound))
+
+    def set_ticks(self, xbounds: tuple = None, ybounds: tuple = None):
+
+        if xbounds:
+            xmin = min(xbounds)
+            xmax = max(xbounds)
+            xlabels = [
+                xl
+                for xl in self.ax.xaxis.get_majorticklocs()
+                if xl > xmin and xl < xmax
+            ]
+            xlabels = [xmin] + xlabels + [xmax]
+            self.ax.set_xticks(xlabels)
+            self.ax.set_xticklabels(xlabels, fontsize=self.fontsize)
+
+        if ybounds:
+            ymin = min(ybounds)
+            ymax = max(ybounds)
+            ylabels = [
+                yl
+                for yl in self.ax.yaxis.get_majorticklocs()
+                if yl > ymin and yl < ymax
+            ]
+            ylabels = [ymin] + ylabels + [ymax]
+            self.ax.set_yticks(ylabels)
+            self.ax.set_yticklabels(ylabels, fontsize=self.fontsize)
+
     @staticmethod
     def fit_axis_range(array: Iterable[int | float], pad: float):
 
@@ -78,65 +118,30 @@ class Canvas:
         return array_min, lower_bound, upper_bound, array_max
 
     def get_axis_values(
-        self,
+        self, x: Iterable[int | float], y: Iterable[int | float], pad: float
     ):
-        if self.x:
-            self.xmin, self.xlower, self.xupper, self.xmax = self.fit_axis_range(
-                self.x, self.pad
-            )
+        axis_values_dict = {}
+        if x:
+            xmin, xlower, xupper, xmax = self.fit_axis_range(x, pad)
+            axis_values_dict["xlim"] = (xlower, xupper)
+            axis_values_dict["xbound"] = (xmin, xmax)
 
-        if self.y:
-            self.ymin, self.ylower, self.yupper, self.ymax = self.fit_axis_range(
-                self.y, self.pad
-            )
+        if y:
+            ymin, ylower, yupper, ymax = self.fit_axis_range(y, pad)
+            axis_values_dict["ylim"] = (ylower, yupper)
+            axis_values_dict["ybound"] = (ymin, ymax)
 
-    def set_axis(self, xlim: tuple, xbound: tuple, ylim: tuple, ybound: tuple):
+        return axis_values_dict
 
-        if self.x:
-            self.ax.set_xlim(xmin=min(xlim), xmax=max(xlim))
-            self.ax.spines["bottom"].set_bounds(min(xbound), max(xbound))
-
-        if self.y:
-            if self.plot_type.lower() == "bar":
-                self.ax.set_ylim(ymin=0, ymax=max(ylim))
-                self.ax.spines["left"].set_bounds(0, max(ybound))
-
-            else:
-                self.ax.set_ylim(min(ylim), max(ylim))
-                self.ax.spines["left"].set_bounds(min(ybound), max(ybound))
-
-    def set_ticks(self):
-
-        if self.x:
-            xlabels = [
-                xl
-                for xl in self.ax.xaxis.get_majorticklocs()
-                if xl > self.xmin and xl < self.xmax
-            ]
-            xlabels = [self.xmin] + xlabels + [self.xmax]
-            self.ax.set_xticks(xlabels)
-            self.ax.set_xticklabels(xlabels, fontsize=self.fontsize)
-
-        if self.y:
-            ylabels = [
-                yl
-                for yl in self.ax.yaxis.get_majorticklocs()
-                if yl > self.ymin and yl < self.ymax
-            ]
-            ylabels = [self.ymin] + ylabels + [self.ymax]
-            self.ax.set_yticks(ylabels)
-            self.ax.set_yticklabels(ylabels, fontsize=self.fontsize)
-
-    def get_canvas(self) -> Axes:
+    def get_canvas(
+        self, x: Iterable[int | float], y: Iterable[int | float], pad: float = 0.05
+    ) -> Axes:
         self.set_spines()
-        self.get_axis_values()
-        self.set_axis(
-            xlim=(self.xlower, self.xupper),
-            xbound=(self.xmin, self.xmax),
-            ylim=(self.ylower, self.yupper),
-            ybound=(self.ymin, self.ymax),
+        axis_values_dict = self.get_axis_values(x, y, pad)
+        self.set_axis(**axis_values_dict)
+        self.set_ticks(
+            xbounds=axis_values_dict["xbounds"], ybounds=axis_values_dict["ybounds"]
         )
-        self.set_ticks()
 
         return self.ax
 
