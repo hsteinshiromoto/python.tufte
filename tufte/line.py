@@ -32,17 +32,6 @@ class Line(Plot):
             fontsize=fontsize,
         )
 
-    @staticmethod
-    def fit(
-        x: Union[str, Iterable],
-        y: Union[str, Iterable],
-        data: pd.DataFrame = None,
-    ):
-        x = data[x] if isinstance(x, str) else x
-        y = data[y] if isinstance(x, str) else y
-
-        return x, y
-
     def plot(
         self,
         linestyle: str = "tufte",

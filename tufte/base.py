@@ -141,6 +141,13 @@ class Plot(ABC, Canvas):
     def plot(self, **kwargs):
         pass
 
-    @abstractmethod
-    def fit(self, **kwargs):
-        pass
+    @staticmethod
+    def fit(
+        x: Union[str, Iterable],
+        y: Union[str, Iterable],
+        data: pd.DataFrame = None,
+    ):
+        x = data[x] if isinstance(x, str) else x
+        y = data[y] if isinstance(x, str) else y
+
+        return x, y
