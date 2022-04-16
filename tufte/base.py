@@ -1,12 +1,12 @@
-import matplotlib.pyplot as plt
-
-from typing import Union
-from collections.abc import Iterable
 from abc import ABC, abstractmethod
+from collections.abc import Iterable
+from typing import Union
+
+import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 from matplotlib.axes import Axes
 from pkg_resources import yield_lines
-import numpy as np
 
 
 class Canvas:
