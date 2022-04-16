@@ -18,14 +18,12 @@ class Canvas:
         figsize: tuple = (20, 10),
         ax: Axes = None,
         pad: float = 0.05,
-        is_bar: bool = False,
         fontsize: int = 12,
     ):
         self.plot_type = plot_type
         self.x = x
         self.y = y
         self.pad = pad
-        self.is_bar = is_bar
         self.fontsize = fontsize
         if not ax:
             self.fig, self.ax = plt.subplots(figsize=figsize)
@@ -99,7 +97,7 @@ class Canvas:
             self.ax.spines["bottom"].set_bounds(self.xmin, self.xmax)
 
         if self.y:
-            if self.is_bar:
+            if self.plot_type.lower() == "bar":
                 self.ax.set_ylim(ymin=0, ymax=self.yupper)
                 self.ax.spines["left"].set_bounds(0, self.ymax)
 
