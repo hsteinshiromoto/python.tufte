@@ -12,28 +12,24 @@ from matplotlib.axes import Axes
 class Line(Plot):
     def __init__(
         self,
-        x: Union[str, Iterable],
-        y: Union[str, Iterable],
-        data: pd.DataFrame = None,
         figsize: tuple = (20, 10),
         ax: Axes = None,
-        pad: float = 0.05,
         fontsize: int = 12,
     ):
-        x, y = self.fit(x, y, data)
+
         Canvas.__init__(
             self,
-            x=x,
-            y=y,
             plot_type=Line.__name__,
             figsize=figsize,
             ax=ax,
-            pad=pad,
             fontsize=fontsize,
         )
 
     def plot(
         self,
+        x: Union[str, Iterable],
+        y: Union[str, Iterable],
+        data: pd.DataFrame = None,
         linestyle: str = "tufte",
         linewidth: float = 1.0,
         color: str = "black",
@@ -42,6 +38,7 @@ class Line(Plot):
         markersize: int = 10,
         **kwargs
     ):
+        x, y = self.fit(x, y, data)
 
         if linestyle == "tufte":
             if kwargs:
@@ -73,3 +70,9 @@ class Line(Plot):
             )
 
         return self.fig, self.ax
+
+    def set_spines(self):
+        self.ax.spines["left"].set_linewidth(0.75)
+        self.ax.spines["bottom"].set_linewidth(0.75)
+        self.ax.spines["left"].set_edgecolor("#4B4B4B")
+        self.ax.spines["bottom"].set_edgecolor("#4B4B4B")
