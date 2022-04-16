@@ -139,28 +139,6 @@ class Canvas:
 
 
 class Plot(ABC, Canvas):
-    def __init__(
-        self,
-        x: Iterable[int | float] = None,
-        y: Iterable[int | float] = None,
-        figsize: tuple = (20, 10),
-        ax: Axes = None,
-        pad: float = 0.05,
-        is_bar: bool = False,
-        fontsize: int = 12,
-    ) -> None:
-        Canvas.__init__(
-            self,
-            plot_type=Plot.__name__,
-            x=x,
-            y=y,
-            figsize=figsize,
-            ax=ax,
-            pad=pad,
-            is_bar=is_bar,
-            fontsize=fontsize,
-        )
-
     @abstractmethod
     def plot(self, **kwargs):
         pass
