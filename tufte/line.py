@@ -44,8 +44,8 @@ class Line(Plot):
             if kwargs:
                 warnings.warn("Marker options are being ignored")
                 self.ax.plot(
-                    self.x,
-                    self.y,
+                    x,
+                    y,
                     linestyle="-",
                     linewidth=linewidth,
                     color=color,
