@@ -82,5 +82,5 @@ class Line(Plot):
                 markersize=markersize**0.5,
                 **kwargs
             )
-        ax = range_frame(ticklabelsize, ax, x, y, dimension="both")
-        return fig, ax
+
+        return self.fig, self.ax
