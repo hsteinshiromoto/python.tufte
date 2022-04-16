@@ -90,20 +90,20 @@ class Canvas:
                 self.y, self.pad
             )
 
-    def set_axis(self):
+    def set_axis(self, xlim: tuple, xbound: tuple, ylim: tuple, ybound: tuple):
 
         if self.x:
-            self.ax.set_xlim(xmin=self.xlower, xmax=self.xupper)
-            self.ax.spines["bottom"].set_bounds(self.xmin, self.xmax)
+            self.ax.set_xlim(xmin=min(xlim), xmax=max(xlim))
+            self.ax.spines["bottom"].set_bounds(min(xbound), max(xbound))
 
         if self.y:
             if self.plot_type.lower() == "bar":
-                self.ax.set_ylim(ymin=0, ymax=self.yupper)
-                self.ax.spines["left"].set_bounds(0, self.ymax)
+                self.ax.set_ylim(ymin=0, ymax=max(ylim))
+                self.ax.spines["left"].set_bounds(0, max(ybound))
 
             else:
-                self.ax.set_ylim(self.ylower, self.yupper)
-                self.ax.spines["left"].set_bounds(self.ymin, self.ymax)
+                self.ax.set_ylim(min(ylim), max(ylim))
+                self.ax.spines["left"].set_bounds(min(ybound), max(ybound))
 
     def set_ticks(self):
 
@@ -130,7 +130,12 @@ class Canvas:
     def get_canvas(self) -> Axes:
         self.set_spines()
         self.get_axis_values()
-        self.set_axis()
+        self.set_axis(
+            xlim=(self.xlower, self.xupper),
+            xbound=(self.xmin, self.xmax),
+            ylim=(self.ylower, self.yupper),
+            ybound=(self.ymin, self.ymax),
+        )
         self.set_ticks()
 
         return self.ax
