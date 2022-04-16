@@ -20,6 +20,7 @@ class Line(Plot):
         pad: float = 0.05,
         fontsize: int = 12,
     ):
+        x, y = self.fit(x, y, data)
         Canvas.__init__(
             self,
             x=x,
@@ -44,9 +45,6 @@ class Line(Plot):
 
     def plot(
         self,
-        x: Union[str, Iterable],
-        y: Union[str, Iterable],
-        data: pd.DataFrame = None,
         linestyle: str = "tufte",
         linewidth: float = 1.0,
         color: str = "black",
@@ -56,14 +54,12 @@ class Line(Plot):
         **kwargs
     ):
 
-        x, y = self.fit(x, y, data)
-
         if linestyle == "tufte":
             if kwargs:
                 warnings.warn("Marker options are being ignored")
                 self.ax.plot(
-                    x,
-                    y,
+                    self.x,
+                    self.y,
                     linestyle="-",
                     linewidth=linewidth,
                     color=color,
@@ -77,8 +73,8 @@ class Line(Plot):
 
         else:
             self.ax.plot(
-                x,
-                y,
+                self.x,
+                self.y,
                 linestyle=linestyle,
                 linewidth=linewidth,
                 color=color,
