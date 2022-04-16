@@ -10,7 +10,7 @@ from matplotlib.axes import Axes
 from pkg_resources import yield_lines
 
 
-class Canvas:
+class Canvas(ABC):
     """Defines the figure container"""
 
     def __init__(
@@ -28,7 +28,7 @@ class Canvas:
         else:
             self.ax = ax
 
-    def set_spines(self):
+    def set_base_spines(self):
         """Set figure spines"""
         self.ax.tick_params(
             axis="both",
@@ -45,6 +45,8 @@ class Canvas:
         self.ax.spines["top"].set_visible(False)
         self.ax.spines["right"].set_visible(False)
 
+        """Remove this commented code
+
         if self.plot_type.lower() == "bar":
             self.ax.spines["left"].set_visible(False)
             self.ax.spines["bottom"].set_linewidth(0.75)
@@ -60,6 +62,7 @@ class Canvas:
             self.ax.spines["bottom"].set_linewidth(0.75)
             self.ax.spines["left"].set_edgecolor("#4B4B4B")
             self.ax.spines["bottom"].set_edgecolor("#4B4B4B")
+        """
 
         return None
 
@@ -153,9 +156,14 @@ class Canvas:
 
         return axis_values_dict
 
+    @abstractmethod
+    def set_spines(self):
+        pass
+
     def get_canvas(
         self, x: Iterable[int | float], y: Iterable[int | float], pad: float = 0.05
     ) -> Axes:
+        self.set_base_spines()
         self.set_spines()
         axis_values_dict = self.get_axis_values(x, y, pad)
         self.set_axis(**axis_values_dict)
