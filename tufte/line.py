@@ -1,15 +1,90 @@
-def line(x, y, df=None, figsize=(16, 8), linestyle='tufte', linewidth=1.0, color='black', alpha=0.9, ticklabelsize=10, markersize=10, **kwargs):
-    x, y = check_df(x, y, df)
-    fig, ax = plt.subplots(figsize=figsize)
-    plot_style(ax, plot_type='line')
-    if linestyle == 'tufte':
-        if len(kwargs) > 0:
-            warnings.warn('Marker options are being ignored')
-        marker = 'o'
-        ax.plot(x, y, linestyle='-', linewidth=linewidth, color=color, alpha=alpha, zorder=1)
-        ax.scatter(x, y, marker=marker, s=markersize*8, color='white', zorder=2)
-        ax.scatter(x, y, marker=marker, s=markersize, color=color, zorder=3)
-    else:
-        ax.plot(x, y, linestyle=linestyle, linewidth=linewidth, color=color, alpha=alpha, markersize=markersize ** 0.5, **kwargs)
-    ax = range_frame(ticklabelsize, ax, x, y, dimension='both')
-    return fig, ax
+import matplotlib.pyplot as plt
+
+from typing import Union
+from collections.abc import Iterable
+import pandas as pd
+import warnings
+
+from base import Plot, Canvas
+from matplotlib.axes import Axes
+
+
+class Line(Plot):
+    def __init__(
+        self,
+        x: Union[str, Iterable],
+        y: Union[str, Iterable],
+        data: pd.DataFrame = None,
+        figsize: tuple = (20, 10),
+        ax: Axes = None,
+        pad: float = 0.05,
+        fontsize: int = 12,
+    ):
+        Canvas.__init__(
+            self,
+            x=x,
+            y=y,
+            plot_type=Line.__name__,
+            figsize=figsize,
+            ax=ax,
+            pad=pad,
+            fontsize=fontsize,
+        )
+
+    @staticmethod
+    def fit(
+        x: Union[str, Iterable],
+        y: Union[str, Iterable],
+        data: pd.DataFrame = None,
+    ):
+        x = data[x] if isinstance(x, str) else x
+        y = data[y] if isinstance(x, str) else y
+
+        return x, y
+
+    def plot(
+        self,
+        x: Union[str, Iterable],
+        y: Union[str, Iterable],
+        data: pd.DataFrame = None,
+        linestyle: str = "tufte",
+        linewidth: float = 1.0,
+        color: str = "black",
+        alpha: float = 0.9,
+        ticklabelsize: int = 10,
+        markersize: int = 10,
+        **kwargs
+    ):
+
+        x, y = self.fit(x, y, data)
+
+        if linestyle == "tufte":
+            if kwargs:
+                warnings.warn("Marker options are being ignored")
+                self.ax.plot(
+                    x,
+                    y,
+                    linestyle="-",
+                    linewidth=linewidth,
+                    color=color,
+                    alpha=alpha,
+                    zorder=1,
+                )
+                self.ax.scatter(
+                    x, y, marker="o", s=markersize * 8, color="white", zorder=2  # type: ignore
+                )
+                self.ax.scatter(x, y, marker="o", s=markersize, color=color, zorder=3)  # type: ignore
+
+        else:
+            self.ax.plot(
+                x,
+                y,
+                linestyle=linestyle,
+                linewidth=linewidth,
+                color=color,
+                alpha=alpha,
+                markersize=markersize**0.5,
+                **kwargs
+            )
+        ax = range_frame(ticklabelsize, ax, x, y, dimension="both")
+        return fig, ax
