@@ -93,13 +93,14 @@ class Canvas(ABC):
             self.ax.spines["bottom"].set_bounds(min(xbound), max(xbound))
 
         if (ylim is not None) & (ybound is not None):
-            if self.plot_type.lower() == "bar":
-                self.ax.set_ylim(ymin=0, ymax=max(ylim))
-                self.ax.spines["left"].set_bounds(0, max(ybound))
+            #! TODO: Fix this case
+            #  if self.plot_type.lower() == "bar":
+            #     self.ax.set_ylim(ymin=0, ymax=max(ylim))
+            #     self.ax.spines["left"].set_bounds(0, max(ybound))
 
-            else:
-                self.ax.set_ylim(min(ylim), max(ylim))
-                self.ax.spines["left"].set_bounds(min(ybound), max(ybound))
+            # else:
+            self.ax.set_ylim(min(ylim), max(ylim))
+            self.ax.spines["left"].set_bounds(min(ybound), max(ybound))
 
     def set_ticks(self, xbounds: tuple = None, ybounds: tuple = None):
 
