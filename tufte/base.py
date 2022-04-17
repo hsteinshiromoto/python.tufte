@@ -20,7 +20,6 @@ class Canvas(ABC):
         ax: Axes = None,
     ):
         self.fontsize = fontsize
-        self.plot_type = plot_type
         if not ax:
             self.fig, self.ax = plt.subplots(figsize=figsize)
 
@@ -173,7 +172,10 @@ class Canvas(ABC):
         return self.ax
 
 
-class Plot(ABC, Canvas):
+class Plot(Canvas):
+    def __init__(self, figsize: tuple = (20, 10), ax: Axes = None, fontsize: int = 12):
+        super().__init__(figsize, fontsize, ax)
+
     @abstractmethod
     def plot(self, **kwargs):
         pass
