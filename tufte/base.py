@@ -88,11 +88,11 @@ class Canvas(ABC):
             ybound (tuple, optional): Max and min values of y limits. Defaults to None.
         """
 
-        if bool(xlim) & bool(xbound):
+        if (xlim is not None) & (xbound is not None):
             self.ax.set_xlim(xmin=min(xlim), xmax=max(xlim))
             self.ax.spines["bottom"].set_bounds(min(xbound), max(xbound))
 
-        if bool(ylim) & bool(ybound):
+        if (ylim is not None) & (ybound is not None):
             if self.plot_type.lower() == "bar":
                 self.ax.set_ylim(ymin=0, ymax=max(ylim))
                 self.ax.spines["left"].set_bounds(0, max(ybound))
@@ -103,7 +103,7 @@ class Canvas(ABC):
 
     def set_ticks(self, xbounds: tuple = None, ybounds: tuple = None):
 
-        if xbounds:
+        if xbounds is not None:
             xmin = min(xbounds)
             xmax = max(xbounds)
             xlabels = [
@@ -115,7 +115,7 @@ class Canvas(ABC):
             self.ax.set_xticks(xlabels)
             self.ax.set_xticklabels(xlabels, fontsize=self.fontsize)
 
-        if ybounds:
+        if ybounds is not None:
             ymin = min(ybounds)
             ymax = max(ybounds)
             ylabels = [
@@ -163,12 +163,12 @@ class Canvas(ABC):
             _type_: _description_
         """
         axis_values_dict = {}
-        if x:
+        if x is not None:
             xmin, xlower, xupper, xmax = self.fit_axis_range(x, pad)
             axis_values_dict["xlim"] = (xlower, xupper)
             axis_values_dict["xbound"] = (xmin, xmax)
 
-        if y:
+        if y is not None:
             ymin, ylower, yupper, ymax = self.fit_axis_range(y, pad)
             axis_values_dict["ylim"] = (ylower, yupper)
             axis_values_dict["ybound"] = (ymin, ymax)
