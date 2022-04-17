@@ -15,10 +15,9 @@ class Canvas(ABC):
 
     def __init__(
         self,
-        plot_type: str,
-        figsize: tuple = (20, 10),
+        figsize: tuple,
+        fontsize: int,
         ax: Axes = None,
-        fontsize: int = 12,
     ):
         self.fontsize = fontsize
         self.plot_type = plot_type
