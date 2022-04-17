@@ -1,8 +1,7 @@
 import sys
 import warnings
-from collections.abc import Iterable
 from pathlib import Path
-from typing import Union
+from typing import Iterable, Union
 
 import matplotlib.pyplot as plt
 import pandas as pd
