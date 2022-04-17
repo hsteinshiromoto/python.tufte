@@ -55,10 +55,42 @@ class Line(Plot):
                 **kwargs
             )
 
-        return self.fig, self.ax
+        return self.ax
 
     def set_spines(self):
         self.ax.spines["left"].set_linewidth(0.75)
         self.ax.spines["bottom"].set_linewidth(0.75)
         self.ax.spines["left"].set_edgecolor("#4B4B4B")
         self.ax.spines["bottom"].set_edgecolor("#4B4B4B")
+
+
+def main(
+    x: Union[str, Iterable],
+    y: Union[str, Iterable],
+    data: pd.DataFrame = None,
+    linestyle: str = "tufte",
+    linewidth: float = 1.0,
+    color: str = "black",
+    alpha: float = 0.9,
+    ticklabelsize: int = 10,
+    markersize: int = 10,
+    figsize: tuple = (20, 10),
+    fontsize: int = 12,
+    ax: Axes = None,
+    **kwargs
+):
+
+    line = Line(figsize=figsize, fontsize=fontsize, ax=ax)
+
+    return line.plot(
+        x=x,
+        y=y,
+        data=data,
+        linestyle=linestyle,
+        linewidth=linewidth,
+        color=color,
+        alpha=alpha,
+        ticklabelsize=ticklabelsize,
+        markersize=markersize,
+        **kwargs
+    )
