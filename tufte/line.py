@@ -1,12 +1,12 @@
-import matplotlib.pyplot as plt
-
-from typing import Union
-from collections.abc import Iterable
-import pandas as pd
 import warnings
+from collections.abc import Iterable
+from typing import Union
 
-from base import Plot, Canvas
+import matplotlib.pyplot as plt
+import pandas as pd
 from matplotlib.axes import Axes
+
+from base import Canvas, Plot
 
 
 class Line(Plot):
