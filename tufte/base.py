@@ -11,14 +11,22 @@ from pkg_resources import yield_lines
 
 
 class Canvas(ABC):
-    """Defines the figure container"""
-
     def __init__(
         self,
         figsize: tuple,
         fontsize: int,
         ax: Axes = None,
     ):
+        """Defines the figure container
+
+        Args:
+            figsize (tuple): Size of canvas.
+            fontsize (int): Font size.
+            ax (Axes, optional): Matplotlib axes. Defaults to None.
+
+        Returns:
+            _type_: _description_
+        """
         self.fontsize = fontsize
         if not ax:
             self.fig, self.ax = plt.subplots(figsize=figsize)
@@ -139,7 +147,10 @@ class Canvas(ABC):
         return array_min, lower_bound, upper_bound, array_max
 
     def get_axis_values(
-        self, x: Iterable[int | float], y: Iterable[int | float], pad: float
+        self,
+        pad: float,
+        x: Iterable[int | float] = None,
+        y: Iterable[int | float] = None,
     ):
         axis_values_dict = {}
         if x:
@@ -163,7 +174,7 @@ class Canvas(ABC):
     ) -> Axes:
         self.set_base_spines()
         self.set_spines()
-        axis_values_dict = self.get_axis_values(x, y, pad)
+        axis_values_dict = self.get_axis_values(pad, x, y)
         self.set_axis(**axis_values_dict)
         self.set_ticks(
             xbounds=axis_values_dict["xbounds"], ybounds=axis_values_dict["ybounds"]
