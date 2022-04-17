@@ -128,7 +128,7 @@ class Canvas(ABC):
             self.ax.set_yticklabels(ylabels, fontsize=self.fontsize)
 
     @staticmethod
-    def fit_axis_range(array: Iterable[int | float], pad: float):
+    def fit_axis_range(array: Iterable[Union[int, float]], pad: float):
         """Calculates spine and limits of a given array to be ploted
 
         Args:
@@ -149,8 +149,8 @@ class Canvas(ABC):
     def get_axis_values(
         self,
         pad: float,
-        x: Iterable[int | float] = None,
-        y: Iterable[int | float] = None,
+        x: Iterable[Union[int, float]] = None,
+        y: Iterable[Union[int, float]] = None,
     ):
         """Calculates plot limits and axes bounds.
 
@@ -181,7 +181,10 @@ class Canvas(ABC):
         pass
 
     def get_canvas(
-        self, x: Iterable[int | float], y: Iterable[int | float], pad: float = 0.05
+        self,
+        x: Iterable[Union[int, float]],
+        y: Iterable[Union[int, float]],
+        pad: float = 0.05,
     ) -> Axes:
         """Format figure container
 
