@@ -1,12 +1,18 @@
+import sys
 import warnings
 from collections.abc import Iterable
+from pathlib import Path
 from typing import Union
 
 import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.axes import Axes
 
-from base import Canvas, Plot
+ROOT_PATH = Path.cwd().resolve().parent
+SOURCE_PATH = ROOT_PATH / "tufte"
+sys.path.append(str(SOURCE_PATH))
+
+from base import Plot
 
 
 class Line(Plot):
