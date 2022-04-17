@@ -45,8 +45,8 @@ class Line(Plot):
 
         else:
             self.ax.plot(
-                self.x,
-                self.y,
+                x,
+                y,
                 linestyle=linestyle,
                 linewidth=linewidth,
                 color=color,
