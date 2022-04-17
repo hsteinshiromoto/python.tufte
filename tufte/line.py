@@ -10,21 +10,6 @@ from matplotlib.axes import Axes
 
 
 class Line(Plot):
-    def __init__(
-        self,
-        figsize: tuple = (20, 10),
-        ax: Axes = None,
-        fontsize: int = 12,
-    ):
-
-        Canvas.__init__(
-            self,
-            plot_type=Line.__name__,
-            figsize=figsize,
-            ax=ax,
-            fontsize=fontsize,
-        )
-
     def plot(
         self,
         x: Union[str, Iterable],
@@ -39,6 +24,7 @@ class Line(Plot):
         **kwargs
     ):
         x, y = self.fit(x, y, data)
+        _ = self.get_canvas(x, y)
 
         if linestyle == "tufte":
             if kwargs:
