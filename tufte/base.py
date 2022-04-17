@@ -152,6 +152,16 @@ class Canvas(ABC):
         x: Iterable[int | float] = None,
         y: Iterable[int | float] = None,
     ):
+        """Calculates plot limits and axes bounds.
+
+        Args:
+            pad (float): Axes bounds padding.
+            x (Iterable[int  |  float], optional): x axes iterable. Defaults to None.
+            y (Iterable[int  |  float], optional): y axes iterable. Defaults to None.
+
+        Returns:
+            _type_: _description_
+        """
         axis_values_dict = {}
         if x:
             xmin, xlower, xupper, xmax = self.fit_axis_range(x, pad)
@@ -167,11 +177,22 @@ class Canvas(ABC):
 
     @abstractmethod
     def set_spines(self):
+        """Set canvas spines"""
         pass
 
     def get_canvas(
         self, x: Iterable[int | float], y: Iterable[int | float], pad: float = 0.05
     ) -> Axes:
+        """Format figure container
+
+        Args:
+            x (Iterable[int  |  float]): x axes.
+            y (Iterable[int  |  float]): y axes.
+            pad (float, optional): Axes bounds padding. Defaults to 0.05.
+
+        Returns:
+            Axes: Figure container
+        """
         self.set_base_spines()
         self.set_spines()
         axis_values_dict = self.get_axis_values(pad, x, y)
