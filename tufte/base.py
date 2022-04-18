@@ -129,7 +129,7 @@ class Canvas(ABC):
             self.ax.set_yticklabels(ylabels, fontsize=self.fontsize)
 
     @staticmethod
-    def fit_axis_range(array: Iterable[Union[int, float]], pad: float):
+    def fit_axis_range(array: np.array, pad: float):
         """Calculates spine and limits of a given array to be ploted
 
         Args:
