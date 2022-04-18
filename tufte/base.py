@@ -211,7 +211,7 @@ class Canvas(ABC):
         """Set canvas spines"""
         pass
 
-    def make_axes_labels(self):
+    def set_axes_labels(self):
         self.ax.set(xlabel=f"{self.xlabel}", ylabel=f"{self.ylabel}")
 
     def get_canvas(
@@ -237,6 +237,7 @@ class Canvas(ABC):
         self.set_ticks(
             xbounds=axis_values_dict["xbounds"], ybounds=axis_values_dict["ybounds"]
         )
+        self.set_axes_labels()
 
         return self.ax
 
