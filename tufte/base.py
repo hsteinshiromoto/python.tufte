@@ -221,8 +221,8 @@ class Plot(Canvas):
         x: Union[str, Iterable],
         y: Union[str, Iterable],
         data: pd.DataFrame = None,
-    ):
-        x = data[x] if isinstance(x, str) else x
-        y = data[y] if isinstance(x, str) else y
+    ) -> np.array:
+        x = data[x] if isinstance(x, str) else np.array(x)
+        y = data[y] if isinstance(x, str) else np.array(y)
 
         return x, y
