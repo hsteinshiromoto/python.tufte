@@ -102,17 +102,23 @@ class Canvas(ABC):
             self.ax.set_ylim(min(ylim), max(ylim))
             self.ax.spines["left"].set_bounds(min(ybounds), max(ybounds))
 
-    def set_ticks(self, xbounds: tuple = None, ybounds: tuple = None):
+    def set_ticks(
+        self, xbounds: tuple = None, ybounds: tuple = None, decimals: int = 2
+    ):
 
         if xbounds is not None:
             xmin = min(xbounds)
             xmax = max(xbounds)
             xlabels = [
-                xl
+                np.around(xl, decimals=decimals)
                 for xl in self.ax.xaxis.get_majorticklocs()
                 if xl > xmin and xl < xmax
             ]
-            xlabels = [xmin] + xlabels + [xmax]
+            xlabels = (
+                [np.around(xmin, decimals=decimals)]
+                + xlabels
+                + [np.around(xmax, decimals=decimals)]
+            )
             self.ax.set_xticks(xlabels)
             self.ax.set_xticklabels(xlabels, fontsize=self.fontsize)
 
@@ -120,11 +126,15 @@ class Canvas(ABC):
             ymin = min(ybounds)
             ymax = max(ybounds)
             ylabels = [
-                yl
+                np.around(yl, decimals=decimals)
                 for yl in self.ax.yaxis.get_majorticklocs()
                 if yl > ymin and yl < ymax
             ]
-            ylabels = [ymin] + ylabels + [ymax]
+            ylabels = (
+                [np.around(ymin, decimals=decimals)]
+                + ylabels
+                + [np.around(ymax, decimals=decimals)]
+            )
             self.ax.set_yticks(ylabels)
             self.ax.set_yticklabels(ylabels, fontsize=self.fontsize)
 
