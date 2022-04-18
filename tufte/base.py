@@ -158,7 +158,7 @@ class Canvas(ABC):
         """Calculates spine and limits of a given array to be ploted
 
         Args:
-            array (Iterable[int  |  float]): Array to be plotted.
+            array (np.array): Array to be plotted.
             pad (float): Additional padding to the limits.
 
         Returns:
