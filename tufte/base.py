@@ -10,6 +10,21 @@ from matplotlib.axes import Axes
 from pkg_resources import yield_lines
 
 
+params = {  #'figure.dpi' : 200,
+    "figure.facecolor": "white",
+    "axes.axisbelow": True,
+    "font.family": "serif",
+    "font.serif": "Bitstream Vera Serif, New Century Schoolbook, Century Schoolbook L,\
+                          Utopia, ITC Bookman, Bookman, Nimbus Roman No9 L, Times New Roman,\
+                          Times, Palatino, Charter, serif",
+    "lines.antialiased": True,
+    "savefig.facecolor": "white",
+}
+
+for (k, v) in params.items():
+    plt.rcParams[k] = v
+
+
 class Canvas(ABC):
     def __init__(
         self,
