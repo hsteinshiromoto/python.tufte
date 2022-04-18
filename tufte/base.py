@@ -104,12 +104,6 @@ class Canvas(ABC):
             self.ax.spines["bottom"].set_bounds(min(xbounds), max(xbounds))
 
         if (ylim is not None) & (ybounds is not None):
-            #! TODO: Fix this case
-            #  if self.plot_type.lower() == "bar":
-            #     self.ax.set_ylim(ymin=0, ymax=max(ylim))
-            #     self.ax.spines["left"].set_bounds(0, max(ybound))
-
-            # else:
             self.ax.set_ylim(min(ylim), max(ylim))
             self.ax.spines["left"].set_bounds(min(ybounds), max(ybounds))
 
@@ -136,34 +130,9 @@ class Canvas(ABC):
 
         return array_min, lower_bound, upper_bound, array_max
 
-    def get_axis_values(
-        self,
-        pad: float,
-        x: Iterable[Union[int, float]] = None,
-        y: Iterable[Union[int, float]] = None,
-    ):
-        """Calculates plot limits and axes bounds.
-
-        Args:
-            pad (float): Axes bounds padding.
-            x (Iterable[int  |  float], optional): x axes iterable. Defaults to None.
-            y (Iterable[int  |  float], optional): y axes iterable. Defaults to None.
-
-        Returns:
-            _type_: _description_
-        """
-        axis_values_dict = {}
-        if x is not None:
-            xmin, xlower, xupper, xmax = self.fit_axis_range(x, pad)
-            axis_values_dict["xlim"] = (xlower, xupper)
-            axis_values_dict["xbounds"] = (xmin, xmax)
-
-        if y is not None:
-            ymin, ylower, yupper, ymax = self.fit_axis_range(y, pad)
-            axis_values_dict["ylim"] = (ylower, yupper)
-            axis_values_dict["ybounds"] = (ymin, ymax)
-
-        return axis_values_dict
+    @abstractmethod
+    def get_axis_values(self, **kwargs):
+        pass
 
     @abstractmethod
     def set_spines(self, **kwargs):

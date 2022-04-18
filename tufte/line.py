@@ -111,6 +111,35 @@ class Line(Plot):
             self.ax.set_yticks(ylabels)
             self.ax.set_yticklabels(ylabels, fontsize=self.fontsize)
 
+    def get_axis_values(
+        self,
+        pad: float,
+        x: Iterable[Union[int, float]] = None,
+        y: Iterable[Union[int, float]] = None,
+    ):
+        """Calculates plot limits and axes bounds.
+
+        Args:
+            pad (float): Axes bounds padding.
+            x (Iterable[int  |  float], optional): x axes iterable. Defaults to None.
+            y (Iterable[int  |  float], optional): y axes iterable. Defaults to None.
+
+        Returns:
+            _type_: _description_
+        """
+        axis_values_dict = {}
+        if x is not None:
+            xmin, xlower, xupper, xmax = self.fit_axis_range(x, pad)
+            axis_values_dict["xlim"] = (xlower, xupper)
+            axis_values_dict["xbounds"] = (xmin, xmax)
+
+        if y is not None:
+            ymin, ylower, yupper, ymax = self.fit_axis_range(y, pad)
+            axis_values_dict["ylim"] = (ylower, yupper)
+            axis_values_dict["ybounds"] = (ymin, ymax)
+
+        return axis_values_dict
+
 
 def main(
     x: Union[str, Iterable],
