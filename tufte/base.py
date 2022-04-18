@@ -13,10 +13,6 @@ from pkg_resources import yield_lines
 params = {  #'figure.dpi' : 200,
     "figure.facecolor": "white",
     "axes.axisbelow": True,
-    "font.family": "serif",
-    "font.serif": "Bitstream Vera Serif, New Century Schoolbook, Century Schoolbook L,\
-                          Utopia, ITC Bookman, Bookman, Nimbus Roman No9 L, Times New Roman,\
-                          Times, Palatino, Charter, serif",
     "lines.antialiased": True,
     "savefig.facecolor": "white",
 }
@@ -62,7 +58,6 @@ class Canvas(ABC):
         )
 
         self.ax.xaxis.label.set_color("#4B4B4B")
-        self.ax.yaxis.label.set_color("#4B4B4B")
         self.ax.spines["top"].set_visible(False)
         self.ax.spines["right"].set_visible(False)
 
