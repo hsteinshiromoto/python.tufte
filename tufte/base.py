@@ -272,5 +272,5 @@ class Plot(Canvas):
         return x, y
 
     @abstractmethod
-    def set_plot_title(self, title: str):
+    def set_plot_title(self, title: str = None):
         self.ax.set(title=title)
