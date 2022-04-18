@@ -26,6 +26,8 @@ class Canvas(ABC):
         self,
         figsize: tuple,
         fontsize: int,
+        xlabel: str,
+        ylabel: str,
         ax: Axes = None,
     ):
         """Defines the figure container
@@ -33,12 +35,16 @@ class Canvas(ABC):
         Args:
             figsize (tuple): Size of canvas.
             fontsize (int): Font size.
+            xlabel (str): Name of x axis.
+            ylabel (str): Name of y axis.
             ax (Axes, optional): Matplotlib axes. Defaults to None.
 
         Returns:
             _type_: _description_
         """
         self.fontsize = fontsize
+        self.xlabel = xlabel
+        self.ylabel = ylabel
         if not ax:
             self.fig, self.ax = plt.subplots(figsize=figsize)
 
@@ -205,6 +211,9 @@ class Canvas(ABC):
         """Set canvas spines"""
         pass
 
+    def make_axes_labels(self):
+        self.ax.set(xlabel=f"{self.xlabel}", ylabel=f"{self.ylabel}")
+
     def get_canvas(
         self,
         x: Iterable[Union[int, float]],
@@ -233,8 +242,17 @@ class Canvas(ABC):
 
 
 class Plot(Canvas):
-    def __init__(self, figsize: tuple = (20, 10), ax: Axes = None, fontsize: int = 18):
-        super().__init__(figsize, fontsize, ax)
+    def __init__(
+        self,
+        xlabel: str,
+        ylabel: str,
+        figsize: tuple = (20, 10),
+        ax: Axes = None,
+        fontsize: int = 18,
+    ):
+        super().__init__(
+            xlabel=xlabel, ylabel=ylabel, figsize=figsize, fontsize=fontsize, ax=ax
+        )
 
     @abstractmethod
     def plot(self, **kwargs):

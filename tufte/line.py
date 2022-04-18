@@ -75,6 +75,8 @@ def main(
     x: Union[str, Iterable],
     y: Union[str, Iterable],
     data: pd.DataFrame = None,
+    xlabel: str = "x",
+    ylabel: str = "y",
     linestyle: str = "tufte",
     linewidth: float = 1.0,
     color: str = "black",
@@ -86,8 +88,7 @@ def main(
     ax: Axes = None,
     **kwargs
 ):
-
-    line = Line(figsize=figsize, fontsize=fontsize, ax=ax)
+    line = Line(xlabel=xlabel, ylabel=ylabel, figsize=figsize, fontsize=fontsize, ax=ax)
 
     return line.plot(
         x=x,
