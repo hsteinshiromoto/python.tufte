@@ -1549,6 +1549,17 @@ secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "cer
 socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
+name = "watermark"
+version = "2.3.0"
+description = "IPython magic function to print date/time stamps and various system information."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+ipython = "*"
+
+[[package]]
 name = "wcwidth"
 version = "0.2.5"
 description = "Measures the displayed width of unicode strings in a terminal"
@@ -1600,7 +1611,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "d55446a26e9ca50427559dd64dc8e4aa3f17b3edd82614dfc15dca51c49a2aed"
+content-hash = "f6bfe99099a1f3c3522dedb7fd354ceb5bacc139d1053d6ede18d00219bfb64f"
 
 [metadata.files]
 alabaster = [
@@ -2539,6 +2550,10 @@ typing-extensions = [
 urllib3 = [
     {file = "urllib3-1.26.9-py2.py3-none-any.whl", hash = "sha256:44ece4d53fb1706f667c9bd1c648f5469a2ec925fcf3a776667042d645472c14"},
     {file = "urllib3-1.26.9.tar.gz", hash = "sha256:aabaf16477806a5e1dd19aa41f8c2b7950dd3c746362d7e3223dbe6de6ac448e"},
+]
+watermark = [
+    {file = "watermark-2.3.0-py2.py3-none-any.whl", hash = "sha256:f0115064b5d0786575fbadb8df3af20834b5f07439d3ecdbd4c985a233fdbcdf"},
+    {file = "watermark-2.3.0.tar.gz", hash = "sha256:5eda865a868a55b9fcad913b2cbdffd07960b4dee3634fd36fd780302bc273eb"},
 ]
 wcwidth = [
     {file = "wcwidth-0.2.5-py2.py3-none-any.whl", hash = "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784"},
