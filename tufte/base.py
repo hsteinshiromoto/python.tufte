@@ -234,7 +234,7 @@ class Canvas(ABC):
 
 
 class Plot(Canvas):
-    def __init__(self, figsize: tuple = (20, 10), ax: Axes = None, fontsize: int = 12):
+    def __init__(self, figsize: tuple = (20, 10), ax: Axes = None, fontsize: int = 18):
         super().__init__(figsize, fontsize, ax)
 
     @abstractmethod
