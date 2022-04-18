@@ -32,21 +32,21 @@ class Line(Plot):
         _ = self.get_canvas(x, y)
 
         if linestyle == "tufte":
-            if kwargs:
-                warnings.warn("Marker options are being ignored")
-                self.ax.plot(
-                    x,
-                    y,
-                    linestyle="-",
-                    linewidth=linewidth,
-                    color=color,
-                    alpha=alpha,
-                    zorder=1,
-                )
-                self.ax.scatter(
-                    x, y, marker="o", s=markersize * 8, color="white", zorder=2  # type: ignore
-                )
-                self.ax.scatter(x, y, marker="o", s=markersize, color=color, zorder=3)  # type: ignore
+            # if kwargs:
+            warnings.warn("Marker options are being ignored")
+            self.ax.plot(
+                x,
+                y,
+                linestyle="-",
+                linewidth=linewidth,
+                color=color,
+                alpha=alpha,
+                zorder=1,
+            )
+            self.ax.scatter(
+                x, y, marker="o", s=markersize * 8, color="white", zorder=2  # type: ignore
+            )
+            self.ax.scatter(x, y, marker="o", s=markersize, color=color, zorder=3)  # type: ignore
 
         else:
             self.ax.plot(
@@ -59,6 +59,8 @@ class Line(Plot):
                 markersize=markersize**0.5,
                 **kwargs
             )
+
+        self.set_spines()
 
         return self.ax
 
