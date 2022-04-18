@@ -254,6 +254,7 @@ class Plot(Canvas):
         super().__init__(
             xlabel=xlabel, ylabel=ylabel, figsize=figsize, fontsize=fontsize, ax=ax
         )
+        self.set_plot_title()
 
     @abstractmethod
     def plot(self, **kwargs):
@@ -269,3 +270,7 @@ class Plot(Canvas):
         y = data[y] if isinstance(x, str) else np.array(y)
 
         return x, y
+
+    @abstractmethod
+    def set_plot_title(self, title: str):
+        self.ax.set(title=title)

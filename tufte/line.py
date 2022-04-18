@@ -26,7 +26,7 @@ class Line(Plot):
         alpha: float = 0.9,
         ticklabelsize: int = 10,
         markersize: int = 10,
-        **kwargs
+        **kwargs,
     ):
         x, y = self.fit(x, y, data)
         _ = self.get_canvas(x, y)
@@ -57,7 +57,7 @@ class Line(Plot):
                 color=color,
                 alpha=alpha,
                 markersize=markersize**0.5,
-                **kwargs
+                **kwargs,
             )
 
         self.set_spines()
@@ -70,6 +70,10 @@ class Line(Plot):
         self.ax.spines["left"].set_edgecolor("#4B4B4B")
         self.ax.spines["bottom"].set_edgecolor("#4B4B4B")
 
+    def set_plot_title(self, title: str = None):
+        title = title or f"{Line.__name__} plot of {self.xlabel} and {self.ylabel}"
+        super().set_plot_title(title)
+
 
 def main(
     x: Union[str, Iterable],
@@ -77,6 +81,7 @@ def main(
     data: pd.DataFrame = None,
     xlabel: str = "x",
     ylabel: str = "y",
+    title: str = None,
     linestyle: str = "tufte",
     linewidth: float = 1.0,
     color: str = "black",
@@ -86,9 +91,16 @@ def main(
     figsize: tuple = (20, 10),
     fontsize: int = 12,
     ax: Axes = None,
-    **kwargs
+    **kwargs,
 ):
-    line = Line(xlabel=xlabel, ylabel=ylabel, figsize=figsize, fontsize=fontsize, ax=ax)
+    line = Line(
+        xlabel=xlabel,
+        ylabel=ylabel,
+        figsize=figsize,
+        fontsize=fontsize,
+        ax=ax,
+    )
+    line.set_plot_title(title)
 
     return line.plot(
         x=x,
@@ -100,5 +112,5 @@ def main(
         alpha=alpha,
         ticklabelsize=ticklabelsize,
         markersize=markersize,
-        **kwargs
+        **kwargs,
     )
