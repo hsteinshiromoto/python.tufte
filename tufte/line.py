@@ -74,6 +74,42 @@ class Line(Plot):
         title = title or f"{Line.__name__} plot of {self.xlabel} and {self.ylabel}"
         super().set_plot_title(title)
 
+    def set_ticks(
+        self, xbounds: tuple = None, ybounds: tuple = None, decimals: int = 2
+    ):
+
+        if xbounds is not None:
+            xmin = min(xbounds)
+            xmax = max(xbounds)
+            xlabels = [
+                np.around(xl, decimals=decimals)
+                for xl in self.ax.xaxis.get_majorticklocs()
+                if xl > xmin and xl < xmax
+            ]
+            xlabels = (
+                [np.around(xmin, decimals=decimals)]
+                + xlabels
+                + [np.around(xmax, decimals=decimals)]
+            )
+            self.ax.set_xticks(xlabels)
+            self.ax.set_xticklabels(xlabels, fontsize=self.fontsize)
+
+        if ybounds is not None:
+            ymin = min(ybounds)
+            ymax = max(ybounds)
+            ylabels = [
+                np.around(yl, decimals=decimals)
+                for yl in self.ax.yaxis.get_majorticklocs()
+                if yl > ymin and yl < ymax
+            ]
+            ylabels = (
+                [np.around(ymin, decimals=decimals)]
+                + ylabels
+                + [np.around(ymax, decimals=decimals)]
+            )
+            self.ax.set_yticks(ylabels)
+            self.ax.set_yticklabels(ylabels, fontsize=self.fontsize)
+
 
 def main(
     x: Union[str, Iterable],

@@ -73,21 +73,12 @@ class Canvas(ABC):
 
         """Remove this commented code
 
-        if self.plot_type.lower() == "bar":
-            self.ax.spines["left"].set_visible(False)
-            self.ax.spines["bottom"].set_linewidth(0.75)
-            self.ax.spines["bottom"].set_edgecolor("LightGray")
-
         elif self.plot_type.lower() == "box":
             self.ax.spines["left"].set_visible(False)
             self.ax.spines["bottom"].set_visible(False)
             self.ax.tick_params(axis="y", left="on")
 
-        elif self.plot_type.lower() in {"line", "scatter"}:
-            self.ax.spines["left"].set_linewidth(0.75)
-            self.ax.spines["bottom"].set_linewidth(0.75)
-            self.ax.spines["left"].set_edgecolor("#4B4B4B")
-            self.ax.spines["bottom"].set_edgecolor("#4B4B4B")
+
         """
 
         return None
@@ -122,41 +113,9 @@ class Canvas(ABC):
             self.ax.set_ylim(min(ylim), max(ylim))
             self.ax.spines["left"].set_bounds(min(ybounds), max(ybounds))
 
-    def set_ticks(
-        self, xbounds: tuple = None, ybounds: tuple = None, decimals: int = 2
-    ):
-
-        if xbounds is not None:
-            xmin = min(xbounds)
-            xmax = max(xbounds)
-            xlabels = [
-                np.around(xl, decimals=decimals)
-                for xl in self.ax.xaxis.get_majorticklocs()
-                if xl > xmin and xl < xmax
-            ]
-            xlabels = (
-                [np.around(xmin, decimals=decimals)]
-                + xlabels
-                + [np.around(xmax, decimals=decimals)]
-            )
-            self.ax.set_xticks(xlabels)
-            self.ax.set_xticklabels(xlabels, fontsize=self.fontsize)
-
-        if ybounds is not None:
-            ymin = min(ybounds)
-            ymax = max(ybounds)
-            ylabels = [
-                np.around(yl, decimals=decimals)
-                for yl in self.ax.yaxis.get_majorticklocs()
-                if yl > ymin and yl < ymax
-            ]
-            ylabels = (
-                [np.around(ymin, decimals=decimals)]
-                + ylabels
-                + [np.around(ymax, decimals=decimals)]
-            )
-            self.ax.set_yticks(ylabels)
-            self.ax.set_yticklabels(ylabels, fontsize=self.fontsize)
+    @abstractmethod
+    def set_ticks(self, **kwargs):
+        pass
 
     @staticmethod
     def fit_axis_range(array: np.array, pad: float):
@@ -207,7 +166,7 @@ class Canvas(ABC):
         return axis_values_dict
 
     @abstractmethod
-    def set_spines(self):
+    def set_spines(self, **kwargs):
         """Set canvas spines"""
         pass
 
