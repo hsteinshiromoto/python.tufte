@@ -162,9 +162,7 @@ class Canvas(ABC):
         self.set_spines()
         axis_values_dict = self.get_axis_values(pad, x, y)
         self.set_axis(**axis_values_dict)
-        self.set_ticks(
-            xbounds=axis_values_dict["xbounds"], ybounds=axis_values_dict["ybounds"]
-        )
+        self.set_ticks(**axis_values_dict)
         self.set_axes_labels()
 
         return self.ax

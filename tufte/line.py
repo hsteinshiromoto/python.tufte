@@ -77,7 +77,7 @@ class Line(Plot):
         super().set_plot_title(title)
 
     def set_ticks(
-        self, xbounds: tuple = None, ybounds: tuple = None, decimals: int = 2
+        self, xbounds: tuple = None, ybounds: tuple = None, decimals: int = 2, **kwargs
     ):
 
         if xbounds is not None:
