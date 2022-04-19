@@ -24,9 +24,20 @@ class Box(Plot):
     ):
         array = self.fit(array)
         summary_stats = self.get_summary_statistics(array)
-        self.ax.plot([0, 0], [v000, v025], color="black", linewidth=0.5)
-        self.ax.plot([0, 0], [v075, v100], color="black", linewidth=0.5)
-        self.ax.scatter([0], [v050], color="black", s=5)
+        self.ax.plot(
+            [0, 0],
+            [summary_stats["lower_bound"], summary_stats["25%"]],
+            color="black",
+            linewidth=0.5,
+        )
+        self.ax.plot(
+            [0, 0],
+            [summary_stats["75%"], summary_stats["upper_bound"]],
+            color="black",
+            linewidth=0.5,
+        )
+        self.ax.scatter([0], [summary_stats["median"]], color="black", s=5)
+        self.ax.axes.get_xaxis().set_visible(False)
 
         return self.ax
 
@@ -41,6 +52,9 @@ class Box(Plot):
         summary_stats["max"] = np.max(array)
         summary_stats["mean"] = np.mean(array)
         summary_stats["std"] = np.std(array)
+        summary_stats["iqr"] = summary_stats["75%"] - summary_stats["25%"]
+        summary_stats["lower_bound"] = summary_stats["25%"] - 1.5 * summary_stats["iqr"]
+        summary_stats["upper_bound"] = summary_stats["75%"] + 1.5 * summary_stats["iqr"]
 
         return summary_stats
 
