@@ -173,8 +173,11 @@ class Canvas(ABC):
 class Plot(Canvas):
     def __init__(
         self,
-        xlabel: str,
-        ylabel: str,
+        x: Union[str, Iterable],
+        y: Union[str, Iterable],
+        data: pd.DataFrame = None,
+        xlabel: str = None,
+        ylabel: str = None,
         figsize: tuple = (20, 10),
         ax: Axes = None,
         fontsize: int = 18,
@@ -182,6 +185,7 @@ class Plot(Canvas):
         super().__init__(
             xlabel=xlabel, ylabel=ylabel, figsize=figsize, fontsize=fontsize, ax=ax
         )
+        self.x, self.y = self.fit(x, y, data)
         self.set_plot_title()
 
     @abstractmethod
