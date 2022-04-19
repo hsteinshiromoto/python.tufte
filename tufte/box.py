@@ -36,7 +36,7 @@ class Box(Plot):
             color="black",
             linewidth=0.5,
         )
-        self.ax.scatter([0], [summary_stats["median"]], color="black", s=5)
+        self.ax.scatter([0], [summary_stats["50%"]], color="black", s=5)
         self.ax.axes.get_xaxis().set_visible(False)
         self.get_canvas({"array": array, "pad": 0.05})
 
@@ -80,18 +80,17 @@ class Box(Plot):
         """
 
         min_val, lower, upper, max_val = self.fit_axis_range(array, pad)
-        return {"lim": (lower, upper), "bounds": (min_val, max_val)}
+        return {"xlim": (lower, upper), "xbounds": (min_val, max_val)}
 
-    def set_ticks(self, bounds: tuple):
-        min_val = min(bounds)
-        max_val = max(bounds)
+    def set_ticks(self, xbounds: tuple, **kwargs):
+        min_val = min(xbounds)
+        max_val = max(xbounds)
         range_val = max_val - min_val
         self.ax.set_ylim(min_val - range_val * 0.05, max_val + range_val * 0.05)
 
 
 def main(
-    x: Union[str, Iterable],
-    y: Union[str, Iterable],
+    array: Union[str, Iterable],
     data: pd.DataFrame = None,
     xlabel: str = "x",
     ylabel: str = "y",
@@ -117,8 +116,7 @@ def main(
     box.set_plot_title(title)
 
     return box.plot(
-        x=x,
-        y=y,
+        array=array,
         data=data,
         linestyle=linestyle,
         linewidth=linewidth,
