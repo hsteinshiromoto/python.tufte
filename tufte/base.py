@@ -1,3 +1,4 @@
+import contextlib
 from abc import ABC, abstractmethod
 from collections.abc import Iterable
 from re import X
@@ -190,12 +191,13 @@ class Plot(Canvas):
 
     @staticmethod
     def fit(
-        x: Union[str, Iterable],
-        y: Union[str, Iterable],
+        x: Union[str, Iterable] = None,
+        y: Union[str, Iterable] = None,
         data: pd.DataFrame = None,
     ) -> np.array:
-        x = data[x] if isinstance(x, str) else np.array(x)
-        y = data[y] if isinstance(x, str) else np.array(y)
+        with contextlib.suppress(TypeError):
+            x = data[x] if isinstance(x, str) else np.array(x)
+            y = data[y] if isinstance(x, str) else np.array(y)
 
         return x, y
 
