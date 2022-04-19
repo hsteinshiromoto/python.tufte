@@ -73,21 +73,12 @@ class Canvas(ABC):
 
         """Remove this commented code
 
-        if self.plot_type.lower() == "bar":
-            self.ax.spines["left"].set_visible(False)
-            self.ax.spines["bottom"].set_linewidth(0.75)
-            self.ax.spines["bottom"].set_edgecolor("LightGray")
-
         elif self.plot_type.lower() == "box":
             self.ax.spines["left"].set_visible(False)
             self.ax.spines["bottom"].set_visible(False)
             self.ax.tick_params(axis="y", left="on")
 
-        elif self.plot_type.lower() in {"line", "scatter"}:
-            self.ax.spines["left"].set_linewidth(0.75)
-            self.ax.spines["bottom"].set_linewidth(0.75)
-            self.ax.spines["left"].set_edgecolor("#4B4B4B")
-            self.ax.spines["bottom"].set_edgecolor("#4B4B4B")
+
         """
 
         return None
@@ -113,50 +104,12 @@ class Canvas(ABC):
             self.ax.spines["bottom"].set_bounds(min(xbounds), max(xbounds))
 
         if (ylim is not None) & (ybounds is not None):
-            #! TODO: Fix this case
-            #  if self.plot_type.lower() == "bar":
-            #     self.ax.set_ylim(ymin=0, ymax=max(ylim))
-            #     self.ax.spines["left"].set_bounds(0, max(ybound))
-
-            # else:
             self.ax.set_ylim(min(ylim), max(ylim))
             self.ax.spines["left"].set_bounds(min(ybounds), max(ybounds))
 
-    def set_ticks(
-        self, xbounds: tuple = None, ybounds: tuple = None, decimals: int = 2
-    ):
-
-        if xbounds is not None:
-            xmin = min(xbounds)
-            xmax = max(xbounds)
-            xlabels = [
-                np.around(xl, decimals=decimals)
-                for xl in self.ax.xaxis.get_majorticklocs()
-                if xl > xmin and xl < xmax
-            ]
-            xlabels = (
-                [np.around(xmin, decimals=decimals)]
-                + xlabels
-                + [np.around(xmax, decimals=decimals)]
-            )
-            self.ax.set_xticks(xlabels)
-            self.ax.set_xticklabels(xlabels, fontsize=self.fontsize)
-
-        if ybounds is not None:
-            ymin = min(ybounds)
-            ymax = max(ybounds)
-            ylabels = [
-                np.around(yl, decimals=decimals)
-                for yl in self.ax.yaxis.get_majorticklocs()
-                if yl > ymin and yl < ymax
-            ]
-            ylabels = (
-                [np.around(ymin, decimals=decimals)]
-                + ylabels
-                + [np.around(ymax, decimals=decimals)]
-            )
-            self.ax.set_yticks(ylabels)
-            self.ax.set_yticklabels(ylabels, fontsize=self.fontsize)
+    @abstractmethod
+    def set_ticks(self, **kwargs):
+        pass
 
     @staticmethod
     def fit_axis_range(array: np.array, pad: float):
@@ -177,37 +130,12 @@ class Canvas(ABC):
 
         return array_min, lower_bound, upper_bound, array_max
 
-    def get_axis_values(
-        self,
-        pad: float,
-        x: Iterable[Union[int, float]] = None,
-        y: Iterable[Union[int, float]] = None,
-    ):
-        """Calculates plot limits and axes bounds.
-
-        Args:
-            pad (float): Axes bounds padding.
-            x (Iterable[int  |  float], optional): x axes iterable. Defaults to None.
-            y (Iterable[int  |  float], optional): y axes iterable. Defaults to None.
-
-        Returns:
-            _type_: _description_
-        """
-        axis_values_dict = {}
-        if x is not None:
-            xmin, xlower, xupper, xmax = self.fit_axis_range(x, pad)
-            axis_values_dict["xlim"] = (xlower, xupper)
-            axis_values_dict["xbounds"] = (xmin, xmax)
-
-        if y is not None:
-            ymin, ylower, yupper, ymax = self.fit_axis_range(y, pad)
-            axis_values_dict["ylim"] = (ylower, yupper)
-            axis_values_dict["ybounds"] = (ymin, ymax)
-
-        return axis_values_dict
+    @abstractmethod
+    def get_axis_values(self, **kwargs):
+        pass
 
     @abstractmethod
-    def set_spines(self):
+    def set_spines(self, **kwargs):
         """Set canvas spines"""
         pass
 
@@ -245,8 +173,11 @@ class Canvas(ABC):
 class Plot(Canvas):
     def __init__(
         self,
-        xlabel: str,
-        ylabel: str,
+        x: Union[str, Iterable],
+        y: Union[str, Iterable],
+        data: pd.DataFrame = None,
+        xlabel: str = None,
+        ylabel: str = None,
         figsize: tuple = (20, 10),
         ax: Axes = None,
         fontsize: int = 18,
@@ -254,6 +185,7 @@ class Plot(Canvas):
         super().__init__(
             xlabel=xlabel, ylabel=ylabel, figsize=figsize, fontsize=fontsize, ax=ax
         )
+        self.x, self.y = self.fit(x, y, data)
         self.set_plot_title()
 
     @abstractmethod
