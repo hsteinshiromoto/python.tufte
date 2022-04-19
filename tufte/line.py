@@ -31,7 +31,7 @@ class Line(Plot):
     ):
         x = self.fit(x, data)
         y = self.fit(y, data)
-        _ = self.get_canvas(x, y)
+        _ = self.get_canvas({"x": x, "y": y, "pad": 0.05})
 
         if linestyle == "tufte":
             # if kwargs:

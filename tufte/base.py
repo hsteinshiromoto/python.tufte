@@ -131,7 +131,7 @@ class Canvas(ABC):
         return array_min, lower_bound, upper_bound, array_max
 
     @abstractmethod
-    def get_axis_values(self, **kwargs):
+    def get_axis_values(self, **kwargs) -> dict:
         pass
 
     @abstractmethod
@@ -142,12 +142,7 @@ class Canvas(ABC):
     def set_axes_labels(self):
         self.ax.set(xlabel=f"{self.xlabel}", ylabel=f"{self.ylabel}")
 
-    def get_canvas(
-        self,
-        x: Iterable[Union[int, float]],
-        y: Iterable[Union[int, float]],
-        pad: float = 0.05,
-    ) -> Axes:
+    def get_canvas(self, kwargs) -> Axes:
         """Format figure container
 
         Args:
@@ -160,7 +155,7 @@ class Canvas(ABC):
         """
         self.set_base_spines()
         self.set_spines()
-        axis_values_dict = self.get_axis_values(pad, x, y)
+        axis_values_dict = self.get_axis_values(**kwargs)
         self.set_axis(**axis_values_dict)
         self.set_ticks(**axis_values_dict)
         self.set_axes_labels()
