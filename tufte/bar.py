@@ -17,11 +17,9 @@ from base import Plot
 
 
 class Bar(Plot):
+    #TODO: redo this class!
     def plot(
         self,
-        x: Union[str, Iterable],
-        y: Union[str, Iterable],
-        data: pd.DataFrame = None,
         align: str = "center",
         color: str = "LightGray",
         edgecolor: str = "none",
@@ -29,9 +27,10 @@ class Bar(Plot):
         gridcolor: str = "white",
         **kwargs,
     ):
-        x, y = self.fit(x, y, data)
 
-        self.ax.bar(x, y, align=align, color=color, edgecolor=edgecolor, width=width)
+        self.ax.bar(
+            self.x, self.y, align=align, color=color, edgecolor=edgecolor, width=width
+        )
 
         return self.ax
 
@@ -41,7 +40,7 @@ class Bar(Plot):
         self.ax.spines["bottom"].set_edgecolor("LightGray")
 
     def set_plot_title(self, title: str = None):
-        title = title or f"{Line.__name__} plot of {self.xlabel} and {self.ylabel}"
+        title = title or f"{Bar.__name__} plot of {self.xlabel} and {self.ylabel}"
         super().set_plot_title(title)
 
     def get_canvas(
@@ -64,21 +63,18 @@ class Bar(Plot):
         """
         self.set_base_spines()
         self.set_spines()
-        xvalues, yvalues = self.get_axis_values(x, y)
-        axis_values_dict["ylim"] = (0, max(axis_values_dict["ylim"]))
-
-        axis_values_dict["xlim"] = self.set_ticks(
-            align, width, axis_values_dict["xbounds"], gridcolor
+        axis_values_dict = self.get_axis_values(x, y)
+        self.set_ticks(axis_values_dict["x"]["range"], align, width, gridcolor)
+        self.set_axis(
+            xlim=axis_values_dict["x"]["range"], xbounds=(0, len(xvalues)), ylim=(0, len(yvalues), ybounds=())
         )
-        self.set_axis(**axis_values_dict)
         self.set_axes_labels()
 
         return self.ax
 
     def set_ticks(
         self,
-        xvalues: Iterable[int | float],
-        yvalues: Iterable[int | float],
+        xrange: Iterable[int | float],
         align: str,
         width: float,
         gridcolor: str,
@@ -95,8 +91,8 @@ class Bar(Plot):
             msg = f"Expected align to be either center of edge. Got {align}."
             raise ValueError(msg)
 
-        xmin = min(xvalues)
-        xmax = max(xvalues)
+        xmin = min(xrange)
+        xmax = max(xrange)
 
         xlist = [
             xl for xl in self.ax.xaxis.get_majorticklocs() if xl >= xmin and xl <= xmax
@@ -120,10 +116,10 @@ class Bar(Plot):
         Returns:
             _type_: _description_
         """
-        xvalues = np.unique(x)
-        yvalues = np.unique(y)
+        xvalues = np.unique(x) if isinstance(next(x), str) else x
+        yvalues = np.unique(y) if isinstance(next(y), str) else y
 
-        return xvalues, yvalues
+        return {"x": {"range": range(len(xvalues))}, "y": {"range": range(len(yvalues))}}
 
     def auto_rotate_xticklabel(self):
         figw = self.fig.get_figwidth()
