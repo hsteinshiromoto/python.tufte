@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from collections.abc import Iterable
+from collections.abc import Iterable, Generator
 from re import X
 from typing import Union
 
@@ -131,7 +131,7 @@ class Canvas(ABC):
         return array_min, lower_bound, upper_bound, array_max
 
     @abstractmethod
-    def get_axis_values(self, **kwargs):
+    def get_axis_values(self, **kwargs) -> dict:
         pass
 
     @abstractmethod
@@ -142,12 +142,7 @@ class Canvas(ABC):
     def set_axes_labels(self):
         self.ax.set(xlabel=f"{self.xlabel}", ylabel=f"{self.ylabel}")
 
-    def get_canvas(
-        self,
-        x: Iterable[Union[int, float]],
-        y: Iterable[Union[int, float]],
-        pad: float = 0.05,
-    ) -> Axes:
+    def get_canvas(self, kwargs) -> Axes:
         """Format figure container
 
         Args:
@@ -160,11 +155,9 @@ class Canvas(ABC):
         """
         self.set_base_spines()
         self.set_spines()
-        axis_values_dict = self.get_axis_values(pad, x, y)
+        axis_values_dict = self.get_axis_values(**kwargs)
         self.set_axis(**axis_values_dict)
-        self.set_ticks(
-            xbounds=axis_values_dict["xbounds"], ybounds=axis_values_dict["ybounds"]
-        )
+        self.set_ticks(**axis_values_dict)
         self.set_axes_labels()
 
         return self.ax
@@ -173,11 +166,8 @@ class Canvas(ABC):
 class Plot(Canvas):
     def __init__(
         self,
-        x: Union[str, Iterable],
-        y: Union[str, Iterable],
-        data: pd.DataFrame = None,
-        xlabel: str = None,
-        ylabel: str = None,
+        xlabel: str,
+        ylabel: str,
         figsize: tuple = (20, 10),
         ax: Axes = None,
         fontsize: int = 18,
@@ -185,7 +175,6 @@ class Plot(Canvas):
         super().__init__(
             xlabel=xlabel, ylabel=ylabel, figsize=figsize, fontsize=fontsize, ax=ax
         )
-        self.x, self.y = self.fit(x, y, data)
         self.set_plot_title()
 
     @abstractmethod
@@ -194,14 +183,17 @@ class Plot(Canvas):
 
     @staticmethod
     def fit(
-        x: Union[str, Iterable],
-        y: Union[str, Iterable],
+        array: Union[str, Generator, Iterable],
         data: pd.DataFrame = None,
     ) -> np.array:
-        x = data[x] if isinstance(x, str) else np.array(x)
-        y = data[y] if isinstance(x, str) else np.array(y)
 
-        return x, y
+        try:
+            array = data[array]
+
+        except TypeError:
+            array = np.array(array)
+
+        return array
 
     @abstractmethod
     def set_plot_title(self, title: str = None):
