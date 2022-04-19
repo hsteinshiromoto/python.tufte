@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from collections.abc import Iterable
+from collections.abc import Iterable, Generator
 from re import X
 from typing import Union
 
@@ -190,14 +190,17 @@ class Plot(Canvas):
 
     @staticmethod
     def fit(
-        x: Union[str, Iterable],
-        y: Union[str, Iterable],
+        array: Union[str, Generator, Iterable],
         data: pd.DataFrame = None,
     ) -> np.array:
-        x = data[x] if isinstance(x, str) else np.array(x)
-        y = data[y] if isinstance(x, str) else np.array(y)
 
-        return x, y
+        try:
+            array = data[array]
+
+        except TypeError:
+            array = np.array(array)
+
+        return array
 
     @abstractmethod
     def set_plot_title(self, title: str = None):

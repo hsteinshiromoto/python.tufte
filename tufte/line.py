@@ -29,7 +29,8 @@ class Line(Plot):
         markersize: int = 10,
         **kwargs,
     ):
-        x, y = self.fit(x, y, data)
+        x = self.fit(x, data)
+        y = self.fit(y, data)
         _ = self.get_canvas(x, y)
 
         if linestyle == "tufte":
