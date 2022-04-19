@@ -18,54 +18,31 @@ from base import Plot
 class Box(Plot):
     def plot(
         self,
-        linestyle: str = "tufte",
-        linewidth: float = 1.0,
-        color: str = "black",
-        alpha: float = 0.9,
+        array: Union[str, Iterable],
         ticklabelsize: int = 10,
-        markersize: int = 10,
         **kwargs,
     ):
-        _ = self.get_canvas(self.x, self.y)
-
-        if linestyle == "tufte":
-            # if kwargs:
-            warnings.warn("Marker options are being ignored")
-            self.ax.plot(
-                self.x,
-                self.y,
-                linestyle="-",
-                linewidth=linewidth,
-                color=color,
-                alpha=alpha,
-                zorder=1,
-            )
-            self.ax.scatter(
-                self.x, self.y, marker="o", s=markersize * 8, color="white", zorder=2  # type: ignore
-            )
-            self.ax.scatter(self.x, self.y, marker="o", s=markersize, color=color, zorder=3)  # type: ignore
-
-        else:
-            self.ax.plot(
-                self.x,
-                self.y,
-                linestyle=linestyle,
-                linewidth=linewidth,
-                color=color,
-                alpha=alpha,
-                markersize=markersize**0.5,
-                **kwargs,
-            )
-
-        self.set_spines()
+        array = self.fit(array)
+        summary_stats = self.get_summary_statistics(array)
+        self.ax.plot([0, 0], [v000, v025], color="black", linewidth=0.5)
+        self.ax.plot([0, 0], [v075, v100], color="black", linewidth=0.5)
+        self.ax.scatter([0], [v050], color="black", s=5)
 
         return self.ax
 
     def set_spines(self):
-        self.ax.spines["left"].set_linewidth(0.75)
-        self.ax.spines["bottom"].set_linewidth(0.75)
-        self.ax.spines["left"].set_edgecolor("#4B4B4B")
-        self.ax.spines["bottom"].set_edgecolor("#4B4B4B")
+        pass
+
+    def get_summary_statistics(self, array: Iterable[Union[int, float]]):
+        summary_stats = {"min": np.min(array)}
+        summary_stats["25%"] = np.percentile(array, 25)
+        summary_stats["50%"] = np.median(array)
+        summary_stats["75%"] = np.percentile(array, 75)
+        summary_stats["max"] = np.max(array)
+        summary_stats["mean"] = np.mean(array)
+        summary_stats["std"] = np.std(array)
+
+        return summary_stats
 
     def set_plot_title(self, title: str = None):
         title = title or f"{Line.__name__} plot of {self.xlabel} and {self.ylabel}"
