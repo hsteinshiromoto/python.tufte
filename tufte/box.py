@@ -38,6 +38,7 @@ class Box(Plot):
         )
         self.ax.scatter([0], [summary_stats["median"]], color="black", s=5)
         self.ax.axes.get_xaxis().set_visible(False)
+        self.get_canvas({"array": array, "pad": 0.05})
 
         return self.ax
 
@@ -59,50 +60,13 @@ class Box(Plot):
         return summary_stats
 
     def set_plot_title(self, title: str = None):
-        title = title or f"{Line.__name__} plot of {self.xlabel} and {self.ylabel}"
+        title = title or f"{Box.__name__} plot of {self.xlabel} and {self.ylabel}"
         super().set_plot_title(title)
-
-    def set_ticks(
-        self, xbounds: tuple = None, ybounds: tuple = None, decimals: int = 2
-    ):
-
-        if xbounds is not None:
-            xmin = min(xbounds)
-            xmax = max(xbounds)
-            xlabels = [
-                np.around(xl, decimals=decimals)
-                for xl in self.ax.xaxis.get_majorticklocs()
-                if xl > xmin and xl < xmax
-            ]
-            xlabels = (
-                [np.around(xmin, decimals=decimals)]
-                + xlabels
-                + [np.around(xmax, decimals=decimals)]
-            )
-            self.ax.set_xticks(xlabels)
-            self.ax.set_xticklabels(xlabels, fontsize=self.fontsize)
-
-        if ybounds is not None:
-            ymin = min(ybounds)
-            ymax = max(ybounds)
-            ylabels = [
-                np.around(yl, decimals=decimals)
-                for yl in self.ax.yaxis.get_majorticklocs()
-                if yl > ymin and yl < ymax
-            ]
-            ylabels = (
-                [np.around(ymin, decimals=decimals)]
-                + ylabels
-                + [np.around(ymax, decimals=decimals)]
-            )
-            self.ax.set_yticks(ylabels)
-            self.ax.set_yticklabels(ylabels, fontsize=self.fontsize)
 
     def get_axis_values(
         self,
         pad: float,
-        x: Iterable[Union[int, float]] = None,
-        y: Iterable[Union[int, float]] = None,
+        array: Iterable[Union[int, float]] = None,
     ):
         """Calculates plot limits and axes bounds.
 
@@ -114,18 +78,15 @@ class Box(Plot):
         Returns:
             _type_: _description_
         """
-        axis_values_dict = {}
-        if x is not None:
-            xmin, xlower, xupper, xmax = self.fit_axis_range(x, pad)
-            axis_values_dict["xlim"] = (xlower, xupper)
-            axis_values_dict["xbounds"] = (xmin, xmax)
 
-        if y is not None:
-            ymin, ylower, yupper, ymax = self.fit_axis_range(y, pad)
-            axis_values_dict["ylim"] = (ylower, yupper)
-            axis_values_dict["ybounds"] = (ymin, ymax)
+        min_val, lower, upper, max_val = self.fit_axis_range(array, pad)
+        return {"lim": (lower, upper), "bounds": (min_val, max_val)}
 
-        return axis_values_dict
+    def set_ticks(self, bounds: tuple):
+        min_val = min(bounds)
+        max_val = max(bounds)
+        range_val = max_val - min_val
+        self.ax.set_ylim(min_val - range_val * 0.05, max_val + range_val * 0.05)
 
 
 def main(
@@ -146,19 +107,19 @@ def main(
     ax: Axes = None,
     **kwargs,
 ):
-    line = Line(
-        x=x,
-        y=y,
-        data=data,
+    box = Box(
         xlabel=xlabel,
         ylabel=ylabel,
         figsize=figsize,
         fontsize=fontsize,
         ax=ax,
     )
-    line.set_plot_title(title)
+    box.set_plot_title(title)
 
-    return line.plot(
+    return box.plot(
+        x=x,
+        y=y,
+        data=data,
         linestyle=linestyle,
         linewidth=linewidth,
         color=color,
