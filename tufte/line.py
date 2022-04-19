@@ -18,6 +18,9 @@ from base import Plot
 class Line(Plot):
     def plot(
         self,
+        x: Union[str, Iterable],
+        y: Union[str, Iterable],
+        data: pd.DataFrame = None,
         linestyle: str = "tufte",
         linewidth: float = 1.0,
         color: str = "black",
@@ -26,14 +29,15 @@ class Line(Plot):
         markersize: int = 10,
         **kwargs,
     ):
-        _ = self.get_canvas(self.x, self.y)
+        x, y = self.fit(x, y, data)
+        _ = self.get_canvas(x, y)
 
         if linestyle == "tufte":
             # if kwargs:
             warnings.warn("Marker options are being ignored")
             self.ax.plot(
-                self.x,
-                self.y,
+                x,
+                y,
                 linestyle="-",
                 linewidth=linewidth,
                 color=color,
@@ -41,14 +45,14 @@ class Line(Plot):
                 zorder=1,
             )
             self.ax.scatter(
-                self.x, self.y, marker="o", s=markersize * 8, color="white", zorder=2  # type: ignore
+                x, y, marker="o", s=markersize * 8, color="white", zorder=2  # type: ignore
             )
-            self.ax.scatter(self.x, self.y, marker="o", s=markersize, color=color, zorder=3)  # type: ignore
+            self.ax.scatter(x, y, marker="o", s=markersize, color=color, zorder=3)  # type: ignore
 
         else:
             self.ax.plot(
-                self.x,
-                self.y,
+                x,
+                y,
                 linestyle=linestyle,
                 linewidth=linewidth,
                 color=color,
@@ -156,9 +160,6 @@ def main(
     **kwargs,
 ):
     line = Line(
-        x=x,
-        y=y,
-        data=data,
         xlabel=xlabel,
         ylabel=ylabel,
         figsize=figsize,
@@ -168,6 +169,9 @@ def main(
     line.set_plot_title(title)
 
     return line.plot(
+        x=x,
+        y=y,
+        data=data,
         linestyle=linestyle,
         linewidth=linewidth,
         color=color,
