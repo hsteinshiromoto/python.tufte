@@ -40,6 +40,19 @@ class Box(Plot):
         self.ax.axes.get_xaxis().set_visible(False)
         self.get_canvas({"array": array, "pad": 0.05})
 
+        # Plot "outliers"
+
+        mask = (array > summary_stats["upper_bound"]).all(axis=1) | (
+            array < summary_stats["lower_bound"]
+        ).all(axis=1)
+        self.ax.scatter(
+            [0] * len(array[mask, :]),
+            array[mask, :],
+            color="black",
+            s=5,
+            marker="x",
+        )
+
         return self.ax
 
     def set_spines(self):
