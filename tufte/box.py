@@ -80,11 +80,11 @@ class Box(Plot):
         """
 
         min_val, lower, upper, max_val = self.fit_axis_range(array, pad)
-        return {"xlim": (lower, upper), "xbounds": (min_val, max_val)}
+        return {"ylim": (lower, upper), "ybounds": (min_val, max_val)}
 
-    def set_ticks(self, xbounds: tuple, **kwargs):
-        min_val = min(xbounds)
-        max_val = max(xbounds)
+    def set_ticks(self, ybounds: tuple, **kwargs):
+        min_val = min(ybounds)
+        max_val = max(ybounds)
         range_val = max_val - min_val
         self.ax.set_ylim(min_val - range_val * 0.05, max_val + range_val * 0.05)
 
