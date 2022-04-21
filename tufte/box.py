@@ -48,9 +48,9 @@ class Box(Plot):
         self.ax.scatter(
             [0] * len(array[mask, :]),
             array[mask, :],
-            color="black",
+            color="grey",
             s=5,
-            marker="x",
+            marker="o",
         )
 
         return self.ax
