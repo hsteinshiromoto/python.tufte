@@ -5,7 +5,7 @@ description = "A Tufte-inspired style for plotting data"
 authors = ["Humberto STEIN SHIROMOTO <h.stein.shiromoto@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 pandas = "^1.4.2"
 numpy = "^1.22.3"
 matplotlib = "^3.5.1"
