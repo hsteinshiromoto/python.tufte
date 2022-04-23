@@ -17,7 +17,7 @@ from base import Plot
 
 
 class Bar(Plot):
-    #TODO: redo this class!
+    # TODO: redo this class!
     def plot(
         self,
         align: str = "center",
@@ -65,9 +65,7 @@ class Bar(Plot):
         self.set_spines()
         axis_values_dict = self.get_axis_values(x, y)
         self.set_ticks(axis_values_dict["x"]["range"], align, width, gridcolor)
-        self.set_axis(
-            xlim=axis_values_dict["x"]["range"], xbounds=(0, len(xvalues)), ylim=(0, len(yvalues), ybounds=())
-        )
+        self.set_axis(xlim=(0, 0), xbounds=(0, 0), ylim=(0, 0), ybounds=(0, 0))
         self.set_axes_labels()
 
         return self.ax
@@ -119,7 +117,10 @@ class Bar(Plot):
         xvalues = np.unique(x) if isinstance(next(x), str) else x
         yvalues = np.unique(y) if isinstance(next(y), str) else y
 
-        return {"x": {"range": range(len(xvalues))}, "y": {"range": range(len(yvalues))}}
+        return {
+            "x": {"range": range(len(xvalues))},
+            "y": {"range": range(len(yvalues))},
+        }
 
     def auto_rotate_xticklabel(self):
         figw = self.fig.get_figwidth()
