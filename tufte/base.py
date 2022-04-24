@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from collections.abc import Iterable, Generator
+from collections.abc import Generator, Iterable
+from dataclasses import dataclass
 from re import X
 from typing import Union
 
@@ -8,7 +9,6 @@ import numpy as np
 import pandas as pd
 from matplotlib.axes import Axes
 from pkg_resources import yield_lines
-
 
 params = {  #'figure.dpi' : 200,
     "figure.facecolor": "white",
@@ -21,35 +21,23 @@ for (k, v) in params.items():
     plt.rcParams[k] = v
 
 
+@dataclass
 class Canvas(ABC):
-    def __init__(
-        self,
-        figsize: tuple,
-        fontsize: int,
-        xlabel: str,
-        ylabel: str,
-        ax: Axes = None,
-    ):
-        """Defines the figure container
+    """Defines the figure container
 
-        Args:
-            figsize (tuple): Size of canvas.
-            fontsize (int): Font size.
-            xlabel (str): Name of x axis.
-            ylabel (str): Name of y axis.
-            ax (Axes, optional): Matplotlib axes. Defaults to None.
+    Args:
+        figsize (tuple): Size of canvas.
+        fontsize (int): Font size.
+        xlabel (str): Name of x axis.
+        ylabel (str): Name of y axis.
+        ax (Axes, optional): Matplotlib axes. Defaults to None.
+    """
 
-        Returns:
-            _type_: _description_
-        """
-        self.fontsize = fontsize
-        self.xlabel = xlabel
-        self.ylabel = ylabel
-        if not ax:
-            self.fig, self.ax = plt.subplots(figsize=figsize)
-
-        else:
-            self.ax = ax
+    figsize: tuple
+    fontsize: int
+    xlabel: str
+    ylabel: str
+    ax: Axes
 
     def set_base_spines(self):
         """Set figure spines"""
@@ -164,18 +152,18 @@ class Canvas(ABC):
 
 
 class Plot(Canvas):
-    def __init__(
-        self,
-        xlabel: str,
-        ylabel: str,
-        figsize: tuple = (20, 10),
-        ax: Axes = None,
-        fontsize: int = 18,
-    ):
-        super().__init__(
-            xlabel=xlabel, ylabel=ylabel, figsize=figsize, fontsize=fontsize, ax=ax
-        )
-        self.set_plot_title()
+    """
+    Defines the plot content
+
+    Args:
+        Canvas (Canvas): Figure container
+    """
+
+    xlabel: str
+    ylabel: str
+    figsize: tuple = (20, 10)
+    ax: Axes = None
+    fontsize: int = 18
 
     @abstractmethod
     def plot(self, **kwargs):
