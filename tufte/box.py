@@ -55,7 +55,7 @@ class Box(Plot):
 
         return self.ax
 
-    def set_spines(self):
+    def set_Box_spines(self):
         pass
 
     def get_summary_statistics(self, array: Iterable[Union[int, float]]):
