@@ -16,6 +16,24 @@ from base import Plot
 
 
 class Line(Plot):
+    """
+    Implements Plot class for line plot.
+
+    Args:
+        Plot (_type_): _description_
+
+    Returns:
+        _type_: _description_
+
+    Example:
+        >>> n_samples = 5
+        >>> x = range(n_samples)
+        >>> y = np.random.rand(n_samples, 1)
+        >>> line = Line(xlabel="xlabel", ylabel="ylabel")
+        >>> print(line)
+        Line(xlabel='xlabel', ylabel='ylabel', ax=<AxesSubplot:>, fontsize=18, figsize=(20, 10))
+    """
+
     def plot(
         self,
         x: Union[str, Iterable],

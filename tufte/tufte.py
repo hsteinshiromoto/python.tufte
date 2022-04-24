@@ -18,8 +18,8 @@ params = {  #'figure.dpi' : 200,
     "savefig.facecolor": "white",
 }
 
-for (k, v) in params.iteritems():
-    plt.rcParams[k] = v
+# for (k, v) in params.iteritems():
+#     plt.rcParams[k] = v
 
 
 def plot_style(ax, plot_type):

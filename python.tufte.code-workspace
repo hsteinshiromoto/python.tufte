@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"autoDocstring.startOnNewLine": true,
+		"pythonTestExplorer.testFramework": "pytest",
+		"python.testing.pytestEnabled": true,
+		"python.testing.pytestArgs": [
+			"--doctest-modules",
+			"--doctest-report",
+			"ndiff",
+			"tufte"
+		]
+	}
+}
