@@ -43,7 +43,7 @@ class Canvas(ABC):
         if self.ax is None:
             self.fig, self.ax = plt.subplots(figsize=self.figsize)
 
-    def set_base_spines(self):
+    def set_spines(self):
         """Set figure spines"""
         self.ax.tick_params(
             axis="both",
@@ -126,11 +126,6 @@ class Canvas(ABC):
     def get_axis_values(self, **kwargs) -> dict:
         pass
 
-    @abstractmethod
-    def set_spines(self, **kwargs):
-        """Set canvas spines"""
-        pass
-
     def set_axes_labels(self):
         self.ax.set(xlabel=f"{self.xlabel}", ylabel=f"{self.ylabel}")
 
@@ -145,8 +140,8 @@ class Canvas(ABC):
         Returns:
             Axes: Figure container
         """
-        self.set_base_spines()
         self.set_spines()
+        getattr(self, f"set_{self.__class__.__name__}_spines")
         axis_values_dict = self.get_axis_values(**kwargs)
         self.set_axis(**axis_values_dict)
         self.set_ticks(**axis_values_dict)
