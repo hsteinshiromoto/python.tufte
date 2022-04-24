@@ -104,7 +104,7 @@ class Canvas(ABC):
         pass
 
     @staticmethod
-    def fit_axis_range(array: np.array, pad: float):
+    def fit_axis_range(array: np.ndarray, pad: float):
         """Calculates spine and limits of a given array to be ploted
 
         Args:
@@ -177,7 +177,7 @@ class Plot(Canvas):
     def fit(
         array: Union[str, Generator, Iterable],
         data: pd.DataFrame = None,
-    ) -> np.array:
+    ) -> np.ndarray:
 
         try:
             array = data[array]
