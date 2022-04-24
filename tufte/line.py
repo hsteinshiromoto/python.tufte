@@ -17,7 +17,7 @@ from base import Plot
 
 class Line(Plot):
     """
-    _summary_
+    Implements Plot class for line plot.
 
     Args:
         Plot (_type_): _description_
