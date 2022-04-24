@@ -80,8 +80,6 @@ class Line(Plot):
                 **kwargs,
             )
 
-        self.set_Line_spines()
-
         return self.ax
 
     def set_Line_spines(self):
@@ -93,71 +91,6 @@ class Line(Plot):
     def set_plot_title(self, title: str = None):
         title = title or f"{Line.__name__} plot of {self.xlabel} and {self.ylabel}"
         super().set_plot_title(title)
-
-    def set_ticks(
-        self, xbounds: tuple = None, ybounds: tuple = None, decimals: int = 2, **kwargs
-    ):
-
-        if xbounds is not None:
-            xmin = min(xbounds)
-            xmax = max(xbounds)
-            xlabels = [
-                np.around(xl, decimals=decimals)
-                for xl in self.ax.xaxis.get_majorticklocs()
-                if xl > xmin and xl < xmax
-            ]
-            xlabels = (
-                [np.around(xmin, decimals=decimals)]
-                + xlabels
-                + [np.around(xmax, decimals=decimals)]
-            )
-            self.ax.set_xticks(xlabels)
-            self.ax.set_xticklabels(xlabels, fontsize=self.fontsize)
-
-        if ybounds is not None:
-            ymin = min(ybounds)
-            ymax = max(ybounds)
-            ylabels = [
-                np.around(yl, decimals=decimals)
-                for yl in self.ax.yaxis.get_majorticklocs()
-                if yl > ymin and yl < ymax
-            ]
-            ylabels = (
-                [np.around(ymin, decimals=decimals)]
-                + ylabels
-                + [np.around(ymax, decimals=decimals)]
-            )
-            self.ax.set_yticks(ylabels)
-            self.ax.set_yticklabels(ylabels, fontsize=self.fontsize)
-
-    def get_axis_values(
-        self,
-        pad: float,
-        x: Iterable[Union[int, float]] = None,
-        y: Iterable[Union[int, float]] = None,
-    ):
-        """Calculates plot limits and axes bounds.
-
-        Args:
-            pad (float): Axes bounds padding.
-            x (Iterable[int  |  float], optional): x axes iterable. Defaults to None.
-            y (Iterable[int  |  float], optional): y axes iterable. Defaults to None.
-
-        Returns:
-            _type_: _description_
-        """
-        axis_values_dict = {}
-        if x is not None:
-            xmin, xlower, xupper, xmax = self.fit_axis_range(x, pad)
-            axis_values_dict["xlim"] = (xlower, xupper)
-            axis_values_dict["xbounds"] = (xmin, xmax)
-
-        if y is not None:
-            ymin, ylower, yupper, ymax = self.fit_axis_range(y, pad)
-            axis_values_dict["ylim"] = (ylower, yupper)
-            axis_values_dict["ybounds"] = (ymin, ymax)
-
-        return axis_values_dict
 
 
 def main(

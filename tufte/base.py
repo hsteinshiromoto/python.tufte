@@ -65,57 +65,6 @@ class Canvas(ABC):
 
         return None
 
-    def set_axis(
-        self,
-        xlim: tuple = None,
-        xbounds: tuple = None,
-        ylim: tuple = None,
-        ybounds: tuple = None,
-    ):
-        """Defines axes limits and spines lengths
-
-        Args:
-            xlim (tuple, optional): Max and min values of x spine. Defaults to None.
-            xbound (tuple, optional): Max and min values of x limits. Defaults to None.
-            ylim (tuple, optional): Max and min values of y spine. Defaults to None.
-            ybound (tuple, optional): Max and min values of y limits. Defaults to None.
-        """
-
-        if (xlim is not None) & (xbounds is not None):
-            self.ax.set_xlim(xmin=min(xlim), xmax=max(xlim))
-            self.ax.spines["bottom"].set_bounds(min(xbounds), max(xbounds))
-
-        if (ylim is not None) & (ybounds is not None):
-            self.ax.set_ylim(min(ylim), max(ylim))
-            self.ax.spines["left"].set_bounds(min(ybounds), max(ybounds))
-
-    @abstractmethod
-    def set_ticks(self, **kwargs):
-        pass
-
-    @staticmethod
-    def fit_axis_range(array: np.ndarray, pad: float):
-        """Calculates spine and limits of a given array to be ploted
-
-        Args:
-            array (np.array): Array to be plotted.
-            pad (float): Additional padding to the limits.
-
-        Returns:
-            float: Bounds of spine and limits of the plot.
-        """
-
-        array_min = array.min().min()
-        array_max = array.max().max()
-        lower_bound = array_min - ((array_max - array_min) * pad)
-        upper_bound = array_max + ((array_max - array_min) * pad)
-
-        return array_min, lower_bound, upper_bound, array_max
-
-    @abstractmethod
-    def get_axis_values(self, **kwargs) -> dict:
-        pass
-
     def set_axes_labels(self):
         self.ax.set(xlabel=f"{self.xlabel}", ylabel=f"{self.ylabel}")
 
@@ -132,9 +81,6 @@ class Canvas(ABC):
         """
         self.set_spines()
         getattr(self, f"set_{self.__class__.__name__}_spines")  # Set specific spines
-        axis_values_dict = self.get_axis_values(**kwargs)
-        self.set_axis(**axis_values_dict)
-        self.set_ticks(**axis_values_dict)
         self.set_axes_labels()
 
         return self.ax
