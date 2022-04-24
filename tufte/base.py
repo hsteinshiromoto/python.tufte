@@ -33,10 +33,10 @@ class Canvas(ABC):
         ax (Axes, optional): Matplotlib axes. Defaults to None.
     """
 
-    fontsize: int
     xlabel: str
     ylabel: str
-    ax: Axes
+    ax: Axes = None
+    fontsize: int = 18
     figsize: tuple = (20, 10)
 
     def __post_init__(self):
@@ -165,9 +165,9 @@ class Plot(Canvas):
 
     xlabel: str
     ylabel: str
-    figsize: tuple = (20, 10)
     ax: Axes = None
     fontsize: int = 18
+    figsize: tuple = (20, 10)
 
     @abstractmethod
     def plot(self, **kwargs):
