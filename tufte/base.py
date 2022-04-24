@@ -131,7 +131,7 @@ class Canvas(ABC):
             Axes: Figure container
         """
         self.set_spines()
-        getattr(self, f"set_{self.__class__.__name__}_spines")
+        getattr(self, f"set_{self.__class__.__name__}_spines")  # Set specific spines
         axis_values_dict = self.get_axis_values(**kwargs)
         self.set_axis(**axis_values_dict)
         self.set_ticks(**axis_values_dict)
