@@ -33,11 +33,15 @@ class Canvas(ABC):
         ax (Axes, optional): Matplotlib axes. Defaults to None.
     """
 
-    figsize: tuple
     fontsize: int
     xlabel: str
     ylabel: str
     ax: Axes
+    figsize: tuple = (20, 10)
+
+    def __post_init__(self):
+        if self.ax is None:
+            self.fig, self.ax = plt.subplots(figsize=self.figsize)
 
     def set_base_spines(self):
         """Set figure spines"""
