@@ -53,10 +53,14 @@ class Box(Plot):
             marker="o",
         )
 
+        self.set_Box_spines()
+
         return self.ax
 
     def set_Box_spines(self):
-        pass
+        self.ax.spines["left"].set_visible(False)
+        self.ax.spines["bottom"].set_visible(False)
+        self.ax.tick_params(axis="y", left="on")
 
     def get_summary_statistics(self, array: Iterable[Union[int, float]]):
         summary_stats = {"min": np.min(array)}

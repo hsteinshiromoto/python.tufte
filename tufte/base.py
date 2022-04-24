@@ -63,16 +63,6 @@ class Canvas(ABC):
         self.ax.get_xaxis().tick_bottom()
         self.ax.get_yaxis().tick_left()
 
-        """Remove this commented code
-
-        elif self.plot_type.lower() == "box":
-            self.ax.spines["left"].set_visible(False)
-            self.ax.spines["bottom"].set_visible(False)
-            self.ax.tick_params(axis="y", left="on")
-
-
-        """
-
         return None
 
     def set_axis(
