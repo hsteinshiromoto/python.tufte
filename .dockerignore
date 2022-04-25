@@ -8,3 +8,4 @@ run.sh
 .devcontainer/*
 .pytest_cache/*
 */__pycache__/*
+docs/build/*
