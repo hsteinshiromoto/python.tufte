@@ -1,7 +1,7 @@
 SHELL:=/bin/bash
 
-.PHONY: all help docs
-.DEFAULT_GOAL := all
+.PHONY: help docs
+.DEFAULT_GOAL := help
 
 # ---
 # VARIABLES
@@ -76,7 +76,7 @@ check:
 
 ## Publish to PyPI
 publish: 
-	poetry publish --username __token__ --password $PYPI_API_TOKEN
+	poetry publish --username __token__ --password ${PYPI_API_TOKEN}
 
 ## Build HTML docs
 docs:
