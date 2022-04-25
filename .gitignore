@@ -11,7 +11,7 @@
 *.pdf
 
 ## Folders ##
-
+docs/build/*
 files/
 .idea/
 

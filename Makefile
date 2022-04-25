@@ -1,6 +1,6 @@
 SHELL:=/bin/bash
 
-.PHONY: all help
+.PHONY: all help docs
 .DEFAULT_GOAL := all
 
 # ---
@@ -78,6 +78,9 @@ check:
 publish: 
 	poetry publish --username __token__ --password $PYPI_API_TOKEN
 
+## Build HTML docs
+docs:
+	make -C docs html
 # ---
 # Self Documenting Commands
 # ---
