@@ -76,7 +76,7 @@ check:
 
 ## Publish to PyPI
 publish: 
-	poetry publish --username __token__ --password $PYPI_API_TOKEN
+	poetry publish --username __token__ --password ${PYPI_API_TOKEN}
 
 ## Build HTML docs
 docs:
