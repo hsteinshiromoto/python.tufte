@@ -10,6 +10,12 @@ Welcome to python.tufte's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   base
+
+Installation
+===========
+
+``pip install tufte.python``
 
 
 Indices and tables
