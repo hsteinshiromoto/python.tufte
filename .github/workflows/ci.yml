@@ -17,7 +17,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: python.tufte
+  IMAGE_NAME: tufte
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -124,12 +124,12 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: hsteinshiromoto/python.tufte:latest
+      image: hsteinshiromoto/tufte:latest
 
     steps:
       - name: Build python package
-        run: cd /home/python.tufte && make build
+        run: cd /home/tufte && make build
 
       - name: Check build package
-        run: cd /home/python.tufte && make check
+        run: cd /home/tufte && make check
 
