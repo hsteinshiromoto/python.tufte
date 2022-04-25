@@ -14,6 +14,13 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+# sys.path.insert(0, os.path.abspath('.'))
+sys.path.append(str(PROJECT_ROOT))
+
 
 # -- Project information -----------------------------------------------------
 
