@@ -1,7 +1,7 @@
 SHELL:=/bin/bash
 
-.PHONY: all help docs
-.DEFAULT_GOAL := all
+.PHONY: help docs
+.DEFAULT_GOAL := help
 
 # ---
 # VARIABLES
