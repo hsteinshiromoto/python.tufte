@@ -1,0 +1,136 @@
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches:
+      - feature/**
+      - release/**
+      - bugfix/**
+      - hotfix/**
+
+    tags:
+      - '**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: tufte
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build_base_image:
+    name: Build docker image and push
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get docker version
+        id: docker_version
+        run: | 
+          echo "::set-output name=version::$(git ls-files -s Dockerfile.base | awk '{print $2}' | cut -c1-16)"
+
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Check if image exists
+        id: image_exists
+        run: |
+          response=$(docker manifest inspect ghcr.io/${{ github.repository }}/$IMAGE_NAME.base:${{ steps.docker_version.outputs.version }} > /dev/null ; echo $?)
+          echo ::set-output name=image_exists::$(echo ${response})
+
+      - name: Build docker image if it is not on registry
+        if: ${{ steps.image_exists.outputs.image_exists == 1 }}
+        run: make base_image
+
+      - name: Push image to Github Registry
+        if: ${{ steps.image_exists.outputs.image_exists == 1 }}
+        run: |
+              IMAGE_ID=ghcr.io/${{ github.repository }}/$IMAGE_NAME.base
+
+              # Change all uppercase to lowercase
+              IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+              # Strip git ref prefix from version
+              VERSION=$(git ls-files -s Dockerfile.base | awk '{print $2}' | cut -c1-16)
+
+              echo IMAGE_ID=$IMAGE_ID
+              echo VERSION=$VERSION
+              echo IMAGE_NAME=$IMAGE_NAME
+
+              docker tag ${{ github.actor }}/$IMAGE_NAME.base:$VERSION $IMAGE_ID:$VERSION
+              docker push $IMAGE_ID:$VERSION
+
+              docker tag $IMAGE_ID:$VERSION $IMAGE_ID:latest
+              docker push $IMAGE_ID:latest
+
+  build_app_image:
+    needs: [build_base_image]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get docker version
+        id: docker_version
+        run: | 
+          echo "::set-output name=version::$(git ls-files -s Dockerfile | awk '{print $2}' | cut -c1-16)"
+
+      - name: Log into Github registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Pull image
+        run: |
+          # Strip git ref prefix from version
+          VERSION=$(git ls-files -s Dockerfile.base | awk '{print $2}' | cut -c1-16)
+
+          docker pull ghcr.io/${{ github.repository }}/$IMAGE_NAME.base:latest
+          docker tag ghcr.io/${{ github.repository }}/$IMAGE_NAME.base:latest ${{ github.actor }}/$IMAGE_NAME.base:$VERSION
+
+      - name: Build docker image
+        run: make app_image
+
+      - name: Login to Dockerhub
+        uses: docker/login-action@v1
+        with: 
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push image to Docker hub Registry
+        run: |
+          IMAGE_ID=${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          # Strip git ref prefix from version
+          VERSION=$(git ls-files -s Dockerfile | awk '{print $2}' | cut -c1-16)
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          echo IMAGE_NAME=$IMAGE_NAME
+
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:$VERSION $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:$VERSION
+
+          docker tag $IMAGE_ID:$VERSION $IMAGE_ID:latest
+          docker push $IMAGE_ID:latest
+
+  build_python_package:
+    needs: [build_app_image]
+    runs-on: ubuntu-latest
+
+    container:
+      image: hsteinshiromoto/tufte:latest
+
+    steps:
+      - name: Build python package
+        run: cd /home/tufte && make build
+
+      # Review twine errors
+      # - name: Check build package
+      #   run: cd /home/tufte && make check
+

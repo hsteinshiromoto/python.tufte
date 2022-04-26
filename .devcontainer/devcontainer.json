@@ -1,0 +1,53 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or the definition README at
+// https://github.com/microsoft/vscode-dev-containers/tree/master/containers/docker-existing-dockerfile
+{
+	"image": "hsteinshiromoto/tufte:latest",
+	// Sets the run context to one level up instead of the .devcontainer folder.
+	"context": "..",
+	// Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
+	// "dockerFile": "../Dockerfile",
+	// Add the IDs of extensions you want installed when the container is created in the array below.
+	"extensions": [
+		"mhutchie.git-graph",
+		"hediet.vscode-drawio",
+		"eamodio.gitlens",
+		"znck.grammarly",
+		"oderwat.indent-rainbow",
+		"ajshort.latex-preview",
+		"james-yu.latex-workshop",
+		"yzhang.markdown-all-in-one",
+		"davidanson.vscode-markdownlint",
+		"christian-kohler.path-intellisense",
+		"esbenp.prettier-vscode",
+		"ms-python.vscode-pylance",
+		"ms-python.python",
+		"njpwerner.autodocstring",
+		"littlefoxteam.vscode-python-test-adapter",
+		"sourcery.sourcery",
+		"cssho.vscode-svgviewer",
+		"hbenl.vscode-test-explorer",
+		"wayou.vscode-icons-mac",
+		"redhat.vscode-yaml",
+		"anjali.clipboard-history",
+		"streetsidesoftware.code-spell-checker",
+		"fabiospampinato.vscode-diff",
+		"nickfode.latex-formatter",
+		"amirha.better-comments-2"
+	],
+	// The optional 'runArgs' property can be used to specify additional runtime arguments.
+	// "runArgs": ["-u", "vscode"],
+	// Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-in-docker for details.
+	// "-v","/var/run/docker.sock:/var/run/docker.sock",
+	// Uncomment the next line if you will be using a ptrace-based debugger like C++, Go, and Rust.
+	// "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"
+	// You may want to add a non-root user to your Dockerfile. On Linux, this will prevent
+	// new files getting created as root. See https://aka.ms/vscode-remote/containers/non-root-user
+	// for the needed Dockerfile updates and then uncomment the next line.
+	// 
+	// Use 'settings' to set *default* container specific settings.json values on container create. 
+	// You can edit these settings after create using File > Preferences > Settings > Remote.
+	// Uncomment the next line if you want to publish any ports.
+	// "appPort": [],
+	// Uncomment the next line to run commands after the container is created - for example installing git.
+	// "postCreateCommand": "sudo apt-get update && apt-get install gnupg2 -y",
+}

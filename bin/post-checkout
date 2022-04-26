@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# This file automatically updates the versions of files pyproject.tom and CITATION.cff
+# based on the latest git tag and the release branch name of the form release/vX.Y.Z
+
+# Copy this file to .git/hooks/
+
+# References:
+# [1] https://stackoverflow.com/questions/26081375/bsd-sed-extra-characters-at-the-end-of-d-command
+
+# ---
+# Variables
+# ---
+PROJECT_ROOT=$(git rev-parse --show-toplevel)
+PROJECT_NAME=$(basename $(git remote get-url origin) | sed 's/.git//g')
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+BRANCH_TYPE=$(echo ${BRANCH_NAME}| cut -d/ -f1)
+NEXT_VERSION=$(echo ${BRANCH_NAME} | cut -d "/" -f2-)
+NEXT_VERSION_NO_PREFIX=$(echo ${NEXT_VERSION} | cut -d "v" -f2-)
+PREVIOUS_VERSION=$(git tag -l --sort=-creatordate | head -n 1)
+PREVIOUS_VERSION_NO_PREFIX=$(echo ${PREVIOUS_VERSION} | cut -d "v" -f2-)
+CURRENT_RELEASE_DATE=$(date +%F)
+PREVIOUS_RELEASE_DATE=$(git log --tags --simplify-by-decoration --pretty="format:%ai %d" | head -n 1 | cut -d " " -f1)
+
+# ---
+# Modification of files
+# ---
+
+if [ "$BRANCH_TYPE" == "release" ]; then
+	echo "Running post-checkout git hook on branch $BRANCH_NAME"
+
+	echo "Updating version $PREVIOUS_VERSION to $NEXT_VERSION"
+	
+	python3 ${PROJECT_ROOT}/bin/post-checkout.py -f ${PREVIOUS_VERSION_NO_PREFIX} -r ${NEXT_VERSION_NO_PREFIX}
+
+	echo "Updating release date $PREVIOUS_RELEASE_DATE to $CURRENT_RELEASE_DATE"
+	if [ "$(uname)" == "Darwin" ]; then
+		# Use sed -i '' "[...]" to work in MacOS [1].
+		sed -i '' -e "s/^date-released:.*/date-released: ${CURRENT_RELEASE_DATE}/" ${PROJECT_ROOT}/CITATION.cff
+	elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+		sed -i -e "s/^date-released:.*/date-released: ${CURRENT_RELEASE_DATE}/" ${PROJECT_ROOT}/CITATION.cff
+	fi
+
+fi

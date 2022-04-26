@@ -1,0 +1,11 @@
+*.log
+.github/*
+Dockerfile
+Dockerfile.base
+LICENSE
+run.sh
+*.code-workspace
+.devcontainer/*
+.pytest_cache/*
+*/__pycache__/*
+docs/build/*
