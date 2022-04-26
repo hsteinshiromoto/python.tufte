@@ -31,7 +31,7 @@ if [ "$BRANCH_TYPE" == "release" ]; then
 
 	echo "Updating version $PREVIOUS_VERSION to $NEXT_VERSION"
 	
-	python ${PROJECT_ROOT}/bin/post-checkout.py -f ${PREVIOUS_VERSION_NO_PREFIX} -r ${NEXT_VERSION_NO_PREFIX}
+	python3 ${PROJECT_ROOT}/bin/post-checkout.py -f ${PREVIOUS_VERSION_NO_PREFIX} -r ${NEXT_VERSION_NO_PREFIX}
 
 	echo "Updating release date $PREVIOUS_RELEASE_DATE to $CURRENT_RELEASE_DATE"
 	if [ "$(uname)" == "Darwin" ]; then
