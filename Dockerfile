@@ -11,7 +11,6 @@ ARG BUILD_DATE
 ARG DEBIAN_FRONTEND=noninteractive
 
 ARG PROJECT_NAME
-ARG PYTHON_VERSION=3.9.7
 
 # ---
 # Enviroment variables
@@ -21,7 +20,6 @@ ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8
 ENV TZ Australia/Sydney
 ENV SHELL=/bin/bash
-ENV PYTHON_VERSION=$PYTHON_VERSION
 ENV HOME=/home/$PROJECT_NAME
 
 RUN mkdir -p $HOME

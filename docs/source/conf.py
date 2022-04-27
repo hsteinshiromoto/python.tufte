@@ -29,7 +29,7 @@ copyright = "2022, Humberto STEIN SHIROMOTO"
 author = "Humberto STEIN SHIROMOTO"
 
 # The full version, including alpha/beta/rc tags
-release = "v0.2.0"
+release = "v0.2.1"
 
 
 # -- General configuration ---------------------------------------------------
