@@ -33,7 +33,7 @@ class Bar(Plot):
 
         return self.ax
 
-    def set_spines(self):
+    def set_Bar_spines(self):
         self.ax.spines["left"].set_visible(False)
         self.ax.spines["bottom"].set_linewidth(0.75)
         self.ax.spines["bottom"].set_edgecolor("LightGray")
@@ -155,16 +155,16 @@ def main(
     ax: Axes = None,
     **kwargs,
 ):
-    line = Bar(
+    bar = Bar(
         xlabel=xlabel,
         ylabel=ylabel,
         figsize=figsize,
         fontsize=fontsize,
         ax=ax,
     )
-    line.set_plot_title(title)
+    bar.set_plot_title(title)
 
-    return line.plot(
+    return bar.plot(
         x=x,
         y=y,
         data=data,
