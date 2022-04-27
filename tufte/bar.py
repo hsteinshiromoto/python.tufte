@@ -19,6 +19,9 @@ class Bar(Plot):
     # TODO: redo this class!
     def plot(
         self,
+        x: str | Iterable,
+        y: str | Iterable,
+        data: pd.DataFrame = None,
         align: str = "center",
         color: str = "LightGray",
         edgecolor: str = "none",
@@ -27,9 +30,15 @@ class Bar(Plot):
         **kwargs,
     ):
 
-        self.ax.bar(
-            self.x, self.y, align=align, color=color, edgecolor=edgecolor, width=width
-        )
+        x = self.fit(x, data)
+        y = self.fit(y, data)
+        _ = self.get_canvas({"x": x, "y": y, "pad": 0.05})
+
+        self.ax.bar(x, y, align=align, color=color, edgecolor=edgecolor, width=width)
+
+        axis_values_dict = self.fit_axis_values(x, y)
+        self.set_ticks(axis_values_dict["x"]["range"], align, width, gridcolor)
+        self.set_axis(xlim=(0, 0), xbounds=(0, 0), ylim=(0, 0), ybounds=(0, 0))
 
         return self.ax
 
@@ -41,33 +50,6 @@ class Bar(Plot):
     def set_plot_title(self, title: str = None):
         title = title or f"{Bar.__name__} plot of {self.xlabel} and {self.ylabel}"
         super().set_plot_title(title)
-
-    def get_canvas(
-        self,
-        x: Iterable[Union[int, float]],
-        y: Iterable[Union[int, float]],
-        align: str,
-        width: float,
-        gridcolor: str,
-    ) -> Axes:
-        """Format figure container
-
-        Args:
-            x (Iterable[int  |  float]): x axes.
-            y (Iterable[int  |  float]): y axes.
-            pad (float, optional): Axes bounds padding. Defaults to 0.05.
-
-        Returns:
-            Axes: Figure container
-        """
-        self.set_base_spines()
-        self.set_spines()
-        axis_values_dict = self.get_axis_values(x, y)
-        self.set_ticks(axis_values_dict["x"]["range"], align, width, gridcolor)
-        self.set_axis(xlim=(0, 0), xbounds=(0, 0), ylim=(0, 0), ybounds=(0, 0))
-        self.set_axes_labels()
-
-        return self.ax
 
     def set_ticks(
         self,
@@ -99,10 +81,10 @@ class Bar(Plot):
         for y in yticklocs:
             self.ax.plot([xlist[0], xlist[-1]], [y, y], color=gridcolor, linewidth=1.25)
 
-    def get_axis_values(
+    def fit_axis_values(
         self,
-        x: Iterable[Union[int, float, str]],
-        y: Iterable[Union[int, float, str]],
+        x: Iterable[int | float | str],
+        y: Iterable[int | float | str],
     ):
         """Calculates plot limits and axes bounds.
 
