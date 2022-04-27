@@ -153,5 +153,5 @@ jobs:
       image: hsteinshiromoto/tufte:latest
 
     steps:
-      - name: Build python package
+      - name: Build docs
         run: cd /home/tufte && make docs
