@@ -138,12 +138,22 @@ jobs:
       image: hsteinshiromoto/tufte:latest
 
     steps:
-      - name: Build python package
+      - name: Build Python package
         run: cd /home/tufte && make build
 
       # Review twine errors
       # - name: Check build package
       #   run: cd /home/tufte && make check
+
+      - name: Upload Python package
+        uses: actions/upload-artifact@v2
+        with:
+          name: pypi_artifacts
+          path: |
+            /home/tufte/build/
+            /home/tufte/dist/
+            /home/tufte/$PACKAGE_NAME.egg-info/
+          retention-days: 90
 
   build_docs:
     needs: [test_code]
@@ -153,5 +163,13 @@ jobs:
       image: hsteinshiromoto/tufte:latest
 
     steps:
-      - name: Build docs
+      - name: Build documentation
         run: cd /home/tufte && make docs
+
+      - name: Upload documentation
+        uses: actions/upload-artifact@v2
+        with:
+          name: pypi_artifacts
+          path: |
+            /home/tufte/
+          retention-days: 90
