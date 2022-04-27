@@ -186,5 +186,5 @@ jobs:
         with:
           name: docs
           path: |
-            /home/tufte/
+            /home/tufte/docs/build
           retention-days: 90
