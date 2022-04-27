@@ -20,10 +20,7 @@ class Line(Plot):
     Implements Plot class for line plot.
 
     Args:
-        Plot (_type_): _description_
-
-    Returns:
-        _type_: _description_
+        Plot: Plot class
 
     Example:
         >>> n_samples = 5

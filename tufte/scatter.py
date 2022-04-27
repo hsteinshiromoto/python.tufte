@@ -20,18 +20,15 @@ class Scatter(Plot):
     Implements Plot class for line plot.
 
     Args:
-        Plot (_type_): _description_
-
-    Returns:
-        _type_: _description_
+        Plot: Plot class.
 
     Example:
         >>> n_samples = 5
         >>> x = range(n_samples)
         >>> y = np.random.rand(n_samples, 1)
-        >>> line = Line(xlabel="xlabel", ylabel="ylabel")
+        >>> scatter = Scatter(xlabel="xlabel", ylabel="ylabel")
         >>> print(line)
-        Line(xlabel='xlabel', ylabel='ylabel', ax=<AxesSubplot:>, fontsize=18, figsize=(20, 10))
+        Scatter(xlabel='xlabel', ylabel='ylabel', ax=<AxesSubplot:>, fontsize=18, figsize=(20, 10))
     """
 
     def plot(
