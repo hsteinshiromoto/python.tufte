@@ -119,8 +119,19 @@ jobs:
           docker tag $IMAGE_ID:$VERSION $IMAGE_ID:latest
           docker push $IMAGE_ID:latest
 
-  build_python_package:
+  test_code:
     needs: [build_app_image]
+    runs-on: ubuntu-latest
+
+    container:
+      image: hsteinshiromoto/tufte:latest
+
+    steps:
+      - name: Todo
+        run: echo "Todo"
+
+  build_package_and_docs:
+    needs: [test_code]
     runs-on: ubuntu-latest
 
     container:
@@ -134,3 +145,13 @@ jobs:
       # - name: Check build package
       #   run: cd /home/tufte && make check
 
+  build_docs:
+    needs: [test_code]
+    runs-on: ubuntu-latest
+
+    container:
+      image: hsteinshiromoto/tufte:latest
+
+    steps:
+      - name: Build python package
+        run: cd /home/tufte && make docs
