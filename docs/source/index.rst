@@ -15,7 +15,7 @@ Welcome to python.tufte's documentation!
 Installation
 ===========
 
-``pip install tufte.python``
+``pip install tufte``
 
 
 Indices and tables
