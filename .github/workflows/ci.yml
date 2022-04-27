@@ -24,6 +24,9 @@ jobs:
   build_base_image:
     name: Build docker image and push
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - uses: actions/checkout@v2
@@ -70,6 +73,9 @@ jobs:
   build_app_image:
     needs: [build_base_image]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - uses: actions/checkout@v2
@@ -122,6 +128,9 @@ jobs:
   test_code:
     needs: [build_app_image]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
     container:
       image: hsteinshiromoto/tufte:latest
@@ -133,6 +142,9 @@ jobs:
   build_package:
     needs: [test_code]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
     container:
       image: hsteinshiromoto/tufte:latest
@@ -158,6 +170,9 @@ jobs:
   build_docs:
     needs: [test_code]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
     container:
       image: hsteinshiromoto/tufte:latest
