@@ -24,7 +24,7 @@ sys.path.append(str(PROJECT_ROOT))
 
 # -- Project information -----------------------------------------------------
 
-project = "python.tufte"
+project = "Tufte"
 copyright = "2022, Humberto STEIN SHIROMOTO"
 author = "Humberto STEIN SHIROMOTO"
 
