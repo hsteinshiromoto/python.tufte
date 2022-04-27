@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-from pathlib import Path
 import argparse
+import warnings
+from pathlib import Path
 
 # The directory containing this file
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -39,7 +40,7 @@ def main(find_str: str, replace_str: str):
         with open(str(file), "r") as f:
             content = f.read()
             if find_str not in content:
-                print('"{find_str}" not found in {file}.'.format(**locals()))
+                warnings.warn(f"{find_str} not found in {file}")
 
                 continue
 
