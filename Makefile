@@ -21,11 +21,11 @@ DOCKER_TAG=$(shell git ls-files -s Dockerfile | awk '{print $$2}' | cut -c1-16)
 # Makefile arguments
 # ---
 ifndef DOCKER_PARENT_IMAGE
-DOCKER_PARENT_IMAGE="python:3.9-slim"
+DOCKER_PARENT_IMAGE="python:3.10-slim"
 endif
 
 ifndef PYTHON_VERSION
-PYTHON_VERSION=3.9.7
+PYTHON_VERSION=3.10
 endif
 
 # ---
@@ -53,7 +53,6 @@ app_image:
 	@echo "Building docker image ${DOCKER_IMAGE_TAG}"
 	docker build --build-arg BUILD_DATE=${BUILD_DATE} \
 				--build-arg PROJECT_NAME=${PROJECT_NAME} \
-				--build-arg PYTHON_VERSION=${PYTHON_VERSION} \
 				--build-arg DOCKER_PARENT_IMAGE=${DOCKER_PARENT_IMAGE} \
 				-f Dockerfile \
 				-t ${DOCKER_IMAGE_TAG} .
