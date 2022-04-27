@@ -1,0 +1,38 @@
+name: "Make New Tagged Release"
+
+on:
+  push:
+    tags:
+      - "**"
+
+jobs:
+  tagged-release:
+    name: "New Release"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - uses: actions/checkout@v2.2.0
+        with:
+          fetch-depth: 0 # This is necessary to get the second latest tag
+
+      - name: Get previous tag
+        run: echo "::set-output name=tag::$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))"
+        id: previous_tag
+
+      - name: Get current tag
+        run: | 
+          echo "::set-output name=tag::${GITHUB_REF#refs/*/}"
+        id: current_tag
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            **Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ steps.previous_tag.outputs.tag }}...${{ steps.current_tag.outputs.tag }}
+          draft: false
+          prerelease: false
