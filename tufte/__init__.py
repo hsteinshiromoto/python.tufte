@@ -1,4 +1,4 @@
 __version__ = "0.2.1"
 
-import line.main as lineplot
-import box.main as boxplot
+from tufte.line import main as lineplot
+from tufte.box import main as boxplot
