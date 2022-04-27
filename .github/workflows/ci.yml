@@ -130,7 +130,7 @@ jobs:
       - name: Todo
         run: echo "Todo"
 
-  build_package_and_docs:
+  build_package:
     needs: [test_code]
     runs-on: ubuntu-latest
 
