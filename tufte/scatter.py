@@ -26,7 +26,7 @@ class Scatter(Plot):
         >>> x = range(n_samples)
         >>> y = np.random.rand(n_samples, 1)
         >>> scatter = Scatter(xlabel="xlabel", ylabel="ylabel")
-        >>> print(line)
+        >>> print(scatter)
         Scatter(xlabel='xlabel', ylabel='ylabel', ax=<AxesSubplot:>, fontsize=18, figsize=(20, 10))
     """
 
