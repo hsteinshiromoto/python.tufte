@@ -8,11 +8,10 @@ import numpy as np
 import pandas as pd
 from matplotlib.axes import Axes
 
-ROOT_PATH = Path.cwd().resolve().parent
-SOURCE_PATH = ROOT_PATH / "tufte"
-sys.path.append(str(SOURCE_PATH))
+PROJECT_ROOT = Path.cwd().resolve().parent
+sys.path.append(str(PROJECT_ROOT))
 
-from base import Plot
+from tufte.base import Plot
 
 
 class Line(Plot):
