@@ -107,7 +107,7 @@ jobs:
               IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
               # Strip git ref prefix from version
-              VERSION=$(git ls-files -s Dockerfile.base | awk '{print $2}' | cut -c1-16)
+              VERSION=$(git ls-files -s Dockerfile | awk '{print $2}' | cut -c1-16)
 
               echo IMAGE_ID=$IMAGE_ID
               echo VERSION=$VERSION
