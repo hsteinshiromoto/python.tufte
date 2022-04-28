@@ -23,7 +23,7 @@ class Bar(Plot):
         y: str | Iterable,
         data: pd.DataFrame = None,
         align: str = "center",
-        color: str = "LightGray",
+        color: str = "gray",
         edgecolor: str = "none",
         width: float = 0.5,
         gridcolor: str = "white",
@@ -34,14 +34,28 @@ class Bar(Plot):
         y = self.fit(y, data)
         _ = self.get_canvas({"x": x, "y": y, "pad": 0.05})
 
-        self.ax.bar(x, y, align=align, color=color, edgecolor=edgecolor, width=width)
+        bars = self.ax.bar(
+            x, y, align=align, color=color, edgecolor=edgecolor, width=width
+        )
+
+        self.ax.axes.get_yaxis().set_visible(False)
+        self.ax.bar_label(bars, fmt="%.1f", label_type="edge")
+        self.ax.spines["left"].set_visible(False)
+        self.ax.spines["bottom"].set_visible(False)
+
+        # xlist = [xl for xl in self.ax.xaxis.get_majorticklocs()]
+        # yticklocs = self.ax.yaxis.get_majorticklocs()
+        # for y in yticklocs:
+        #     self.ax.plot([xlist[0], xlist[-1]], [y, y], color=gridcolor, linewidth=2)
 
         return self.ax
 
     def set_Bar_spines(self):
-        self.ax.spines["left"].set_visible(False)
-        self.ax.spines["bottom"].set_linewidth(0.75)
-        self.ax.spines["bottom"].set_edgecolor("LightGray")
+        # self.ax.spines["bottom"].set_visible(False)
+        # self.ax.spines["left"].set_visible(False)
+        # self.ax.spines["bottom"].set_linewidth(0.75)
+        # self.ax.spines["bottom"].set_edgecolor("LightGray")
+        pass
 
     def set_plot_title(self, title: str = None):
         title = title or f"{Bar.__name__} plot of {self.xlabel} and {self.ylabel}"
