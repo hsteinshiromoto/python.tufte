@@ -4,6 +4,7 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+#!TODO: Review this answer https://stackoverflow.com/questions/52648002/readthedocs-does-not-display-docstring-documentation
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
