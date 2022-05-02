@@ -52,7 +52,7 @@ class Box(Plot):
             marker="o",
         )
 
-        self.set_Box_spines()
+        self.set_box_spines()
 
         return self.ax
 
