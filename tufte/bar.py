@@ -40,7 +40,7 @@ class Bar(Plot):
 
         self.ax.bar_label(bars, fmt="%.1f", label_type="edge")
 
-        self.set_additional_spines()
+        self.set_bar_spines()
 
         # xlist = [xl for xl in self.ax.xaxis.get_majorticklocs()]
         # yticklocs = self.ax.yaxis.get_majorticklocs()
@@ -50,12 +50,8 @@ class Bar(Plot):
         return self.ax
 
     def set_bar_spines(self):
-        pass
-
-    def set_additional_spines(self):
         self.ax.spines["left"].set_visible(False)
         self.ax.spines["bottom"].set_visible(False)
-        self.ax.xaxis.set_ticks_position("bottom")
         self.ax.axes.get_yaxis().set_visible(False)
 
     def set_plot_title(self, title: str = None):
