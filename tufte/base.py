@@ -58,6 +58,7 @@ class Canvas(ABC):
         self.ax.xaxis.label.set_color("#4B4B4B")
         self.ax.spines["top"].set_visible(False)
         self.ax.spines["right"].set_visible(False)
+        self.ax.xaxis.set_ticks_position("bottom")
 
         return None
 
