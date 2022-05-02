@@ -76,7 +76,9 @@ class Canvas(ABC):
             Axes: Figure container
         """
         self.set_spines()
-        getattr(self, f"set_{self.__class__.__name__}_spines")  # Set specific spines
+        getattr(
+            self, f"set_{self.__class__.__name__.lower()}_spines"
+        )  # Set specific spines
         self.set_axes_labels()
 
         return self.ax

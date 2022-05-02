@@ -63,7 +63,7 @@ class Scatter(Plot):
 
         return self.ax
 
-    def set_Scatter_spines(self):
+    def set_scatter_spines(self):
         self.ax.spines["left"].set_linewidth(0.75)
         self.ax.spines["bottom"].set_linewidth(0.75)
         self.ax.spines["left"].set_edgecolor("#4B4B4B")

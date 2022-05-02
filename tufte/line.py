@@ -78,7 +78,7 @@ class Line(Plot):
 
         return self.ax
 
-    def set_Line_spines(self):
+    def set_line_spines(self):
         self.ax.spines["left"].set_linewidth(0.75)
         self.ax.spines["bottom"].set_linewidth(0.75)
         self.ax.spines["left"].set_edgecolor("#4B4B4B")
