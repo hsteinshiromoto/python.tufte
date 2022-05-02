@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tufte"
-version = "0.2.1"
+version = "0.2.2"
 description = "A Tufte-inspired style for plotting data"
 authors = ["Humberto STEIN SHIROMOTO <h.stein.shiromoto@gmail.com>"]
 
