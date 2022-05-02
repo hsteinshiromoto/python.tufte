@@ -52,11 +52,11 @@ class Box(Plot):
             marker="o",
         )
 
-        self.set_Box_spines()
+        self.set_box_spines()
 
         return self.ax
 
-    def set_Box_spines(self):
+    def set_box_spines(self):
         self.ax.spines["left"].set_visible(False)
         self.ax.spines["bottom"].set_visible(False)
         self.ax.tick_params(axis="y", left="on")

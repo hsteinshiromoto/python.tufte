@@ -4,6 +4,7 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+#!TODO: Review this answer https://stackoverflow.com/questions/52648002/readthedocs-does-not-display-docstring-documentation
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -16,11 +17,12 @@
 
 import sys
 from pathlib import Path
+import os
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-# sys.path.insert(0, os.path.abspath('.'))
-sys.path.append(str(PROJECT_ROOT))
+# PROJECT_ROOT = Path(__file__).resolve().parents[2]
+# sys.path.append(str(PROJECT_ROOT))
 
+sys.path.insert(0, os.path.abspath("."))
 
 # -- Project information -----------------------------------------------------
 

@@ -9,3 +9,17 @@ run.sh
 .pytest_cache/*
 */__pycache__/*
 docs/build/*
+
+.bash_history
+.cache/*
+.config/*
+
+.git/*
+.gitconfig
+.gitignore
+.gnupg/*
+.ipython/*
+.local/*
+.python_history
+.ssh/*
+.vscode-server/*

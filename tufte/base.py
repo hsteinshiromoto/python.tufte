@@ -58,10 +58,7 @@ class Canvas(ABC):
         self.ax.xaxis.label.set_color("#4B4B4B")
         self.ax.spines["top"].set_visible(False)
         self.ax.spines["right"].set_visible(False)
-
-        # Ensure that the axis ticks only show up on the bottom and left of the plot.
-        self.ax.get_xaxis().tick_bottom()
-        self.ax.get_yaxis().tick_left()
+        self.ax.xaxis.set_ticks_position("bottom")
 
         return None
 
@@ -80,7 +77,9 @@ class Canvas(ABC):
             Axes: Figure container
         """
         self.set_spines()
-        getattr(self, f"set_{self.__class__.__name__}_spines")  # Set specific spines
+        getattr(
+            self, f"set_{self.__class__.__name__.lower()}_spines"
+        )  # Set specific spines
         self.set_axes_labels()
 
         return self.ax

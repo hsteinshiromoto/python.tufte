@@ -63,11 +63,15 @@ class Scatter(Plot):
 
         return self.ax
 
-    def set_Scatter_spines(self):
+    def set_scatter_spines(self):
         self.ax.spines["left"].set_linewidth(0.75)
         self.ax.spines["bottom"].set_linewidth(0.75)
         self.ax.spines["left"].set_edgecolor("#4B4B4B")
         self.ax.spines["bottom"].set_edgecolor("#4B4B4B")
+
+        # Ensure that the axis ticks only show up on the bottom and left of the plot.
+        self.ax.get_xaxis().tick_bottom()
+        self.ax.get_yaxis().tick_left()
 
     def set_plot_title(self, title: str = None):
         title = title or f"{Scatter.__name__} plot of {self.xlabel} and {self.ylabel}"
