@@ -8,11 +8,10 @@ import numpy as np
 import pandas as pd
 from matplotlib.axes import Axes
 
-ROOT_PATH = Path.cwd().resolve().parent
-SOURCE_PATH = ROOT_PATH / "tufte"
-sys.path.append(str(SOURCE_PATH))
+PROJECT_ROOT = Path.cwd().resolve().parent
+sys.path.append(str(PROJECT_ROOT))
 
-from base import Plot
+from tufte.base import Plot
 
 
 class Box(Plot):
@@ -53,11 +52,11 @@ class Box(Plot):
             marker="o",
         )
 
-        self.set_Box_spines()
+        self.set_box_spines()
 
         return self.ax
 
-    def set_Box_spines(self):
+    def set_box_spines(self):
         self.ax.spines["left"].set_visible(False)
         self.ax.spines["bottom"].set_visible(False)
         self.ax.tick_params(axis="y", left="on")

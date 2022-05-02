@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tufte"
-version = "0.2.1"
+version = "0.2.2"
 description = "A Tufte-inspired style for plotting data"
 authors = ["Humberto STEIN SHIROMOTO <h.stein.shiromoto@gmail.com>"]
 
@@ -21,6 +21,7 @@ Sphinx = "^4.5.0"
 sphinx-rtd-theme = "^1.0.0"
 black = "^22.3.0"
 watermark = "^2.3.0"
+icecream = "^2.1.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

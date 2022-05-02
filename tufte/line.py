@@ -8,11 +8,10 @@ import numpy as np
 import pandas as pd
 from matplotlib.axes import Axes
 
-ROOT_PATH = Path.cwd().resolve().parent
-SOURCE_PATH = ROOT_PATH / "tufte"
-sys.path.append(str(SOURCE_PATH))
+PROJECT_ROOT = Path.cwd().resolve().parent
+sys.path.append(str(PROJECT_ROOT))
 
-from base import Plot
+from tufte.base import Plot
 
 
 class Line(Plot):
@@ -20,10 +19,7 @@ class Line(Plot):
     Implements Plot class for line plot.
 
     Args:
-        Plot (_type_): _description_
-
-    Returns:
-        _type_: _description_
+        Plot: Plot class
 
     Example:
         >>> n_samples = 5
@@ -82,11 +78,15 @@ class Line(Plot):
 
         return self.ax
 
-    def set_Line_spines(self):
+    def set_line_spines(self):
         self.ax.spines["left"].set_linewidth(0.75)
         self.ax.spines["bottom"].set_linewidth(0.75)
         self.ax.spines["left"].set_edgecolor("#4B4B4B")
         self.ax.spines["bottom"].set_edgecolor("#4B4B4B")
+
+        # Ensure that the axis ticks only show up on the bottom and left of the plot.
+        self.ax.get_xaxis().tick_bottom()
+        self.ax.get_yaxis().tick_left()
 
     def set_plot_title(self, title: str = None):
         title = title or f"{Line.__name__} plot of {self.xlabel} and {self.ylabel}"
