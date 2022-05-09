@@ -1,8 +1,27 @@
 [tool.poetry]
+# Define packages properties here, instead of using setup.py, because we're 
+# building with poetry.
+#
+# References:
+#   [1] https://johnfraney.ca/blog/create-publish-python-package-poetry/
 name = "tufte"
 version = "0.2.2"
 description = "A Tufte-inspired style for plotting data"
 authors = ["Humberto STEIN SHIROMOTO <h.stein.shiromoto@gmail.com>"]
+license = "GPL"
+readme = "README.md"
+homepage = "https://github.com/hsteinshiromoto/tufte"
+repository = "https://github.com/hsteinshiromoto/tufte"
+keywords = ["Tufte", "matplotlib"]
+classifiers = [
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Quality Assurance",
+]
+include = [
+    "LICENSE",
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
