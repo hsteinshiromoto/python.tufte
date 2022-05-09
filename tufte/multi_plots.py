@@ -70,7 +70,7 @@ def main(
         fig, (ax_line, ax_bar) = plt.subplots(nrows=2, figsize=figsize, sharex=sharex)
 
     line = Line(
-        xlabel=xlabel,
+        xlabel="",
         ylabel=yline_label,
         figsize=figsize,
         fontsize=fontsize,
@@ -90,14 +90,15 @@ def main(
         ylabel=ybar_label,
         figsize=figsize,
         fontsize=fontsize,
-        ax=ax_line,
+        ax=ax_bar,
     )
-    bar.set_plot_title(title)
+    bar.set_plot_title(" ")
 
     ax_bar = bar.plot(
         x=x,
         y=ybar,
         data=data,
+        ax=ax_bar,
         **kwargs,
     )
 
