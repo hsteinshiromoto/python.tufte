@@ -16,6 +16,21 @@ from tufte.base import Plot
 
 
 class Bar(Plot):
+    """
+    Implements Plot class for bar plot.
+
+    Args:
+        Plot: Plot class
+
+    Example:
+        >>> x = ["A", "B", "C", "D", "E", "F"]
+        >>> n_samples = len(x)
+        >>> y = np.random.randint(10, 100, n_samples)
+        >>> bar = Bar(xlabel="xlabel", ylabel="ylabel")
+        >>> print(bar)
+        Bar(xlabel='xlabel', ylabel='ylabel', ax=<AxesSubplot:>, fontsize=18, figsize=(20, 10))
+    """
+
     def plot(
         self,
         x: str | Iterable,
