@@ -7,3 +7,7 @@
 # Tufte
 
 A Tufte-inspired style for plotting data.
+
+# Installation
+
+`$ pip install tufte`
