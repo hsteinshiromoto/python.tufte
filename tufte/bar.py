@@ -16,7 +16,6 @@ from tufte.base import Plot
 
 
 class Bar(Plot):
-    # TODO: redo this class!
     def plot(
         self,
         x: str | Iterable,
