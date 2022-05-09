@@ -5,7 +5,7 @@
 # References:
 #   [1] https://johnfraney.ca/blog/create-publish-python-package-poetry/
 name = "tufte"
-version = "0.2.2"
+version = "0.2.3"
 description = "A Tufte-inspired style for plotting data"
 authors = ["Humberto STEIN SHIROMOTO <h.stein.shiromoto@gmail.com>"]
 license = "GPL"
