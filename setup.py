@@ -12,7 +12,7 @@ print(README)
 # This call to setup() does all the work
 setup(
     name="tufte",
-    version="0.2.2",
+    version="0.2.3",
     description="A Tufte-inspired style for plotting data",
     long_description=README,
     long_description_content_type="text/markdown",
