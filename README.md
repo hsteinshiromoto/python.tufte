@@ -4,6 +4,16 @@
 [![PyPI version](https://badge.fury.io/py/tufte.svg)](https://badge.fury.io/py/tufte)
 [![DOI](https://zenodo.org/badge/130211437.svg)](https://zenodo.org/badge/latestdoi/130211437)
 
-# Tufte
+# 1. Tufte
 
 A Tufte-inspired style for plotting data.
+
+# 2. Table of Contents
+
+- [1. Tufte](#1-tufte)
+- [2. Table of Contents](#2-table-of-contents)
+- [3. Installation](#3-installation)
+
+# 3. Installation
+
+`$ pip install tufte`
