@@ -170,9 +170,8 @@ jobs:
       - name: Build Python package
         run: cd /home/tufte && make build
 
-      # Review twine errors
-      # - name: Check build package
-      #   run: cd /home/tufte && make check
+      - name: Check build package
+        run: cd /home/tufte && make check
 
       - name: Upload Python package
         uses: actions/upload-artifact@v2
