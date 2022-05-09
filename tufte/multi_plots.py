@@ -45,7 +45,7 @@ class LineBar(Plot):
         pass
 
     def set_plot_title(self, title: str = None):
-        title = title or f"{LineBar.__name__} plot of {self.xlabel} and {self.ylabel}"
+        title = title or f"Line and Bar plots of {self.xlabel} and {self.ylabel}"
         super().set_plot_title(title)
 
 
