@@ -1,14 +1,13 @@
 import sys
-from pathlib import Path
-from collections.abc import Iterable
-
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.testing.decorators import image_comparison, check_figures_equal
-from PIL import Image
-import pytest
 import tempfile
+from collections.abc import Iterable
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pytest
 from matplotlib.axes import Axes
+from PIL import Image
 
 PROJECT_ROOT = Path.cwd().resolve().parent
 sys.path.append(str(PROJECT_ROOT))
