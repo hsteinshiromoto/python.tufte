@@ -17,20 +17,22 @@ from tufte.bar import main as barplot
 REFERENCE_IMAGE = "reference_bar.png"
 
 
-def make_figure(x: Iterable, y: Iterable) -> Axes:
-    return barplot(x, y)
+def make_figure(x: Iterable, y: Iterable, path: Path, filename: str) -> Axes:
+    ax = barplot(x, y)
+
+    plt.savefig(str(path / filename))
+
+    return ax
 
 
-@pytest.fixture(scope="module")
-def make_reference_figure(filename: str = REFERENCE_IMAGE) -> Path:
+def make_reference_figure() -> Path:
     x = ["A", "B", "C", "D", "E", "F"]
     y = np.array([41, 23, 48, 84, 32, 38]).flatten()
 
-    ax = make_figure(x, y)
-
     path = Path(tempfile.mkdtemp())
+    filename = REFERENCE_IMAGE
 
-    plt.savefig(str(path / filename))
+    make_figure(x, y, path, filename)
 
     return path
 
