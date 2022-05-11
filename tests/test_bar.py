@@ -9,7 +9,7 @@ import pytest
 from matplotlib.axes import Axes
 from PIL import Image
 
-PROJECT_ROOT = Path.cwd().resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(PROJECT_ROOT))
 
 from tufte.bar import main as barplot
