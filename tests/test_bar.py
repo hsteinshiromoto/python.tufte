@@ -32,16 +32,25 @@ def make_reference_figure() -> Path:
 
     make_figure(x, y, REFERENCE_PATH, REFERENCE_IMAGE)
 
-    return path
+
+def make_test_figure(
+    x: Iterable = ["A", "B", "C", "D", "E", "F"],
+    y: Iterable = np.array([41, 23, 48, 84, 32, 38]).flatten(),
+    path: Path = Path(tempfile.mkdtemp()),
+    filename: str = "test_image.png",
+) -> Path:
+
+    make_figure(x, y, path, filename)
+
+    return path / filename
 
 
-@pytest.fixture
-def call_reference_figure(request):
-    make_reference_figure(request.param)
+@pytest.fixture(params=[["A", "B", "C", "D", "E", "F"], ["A", "B", "C", "D", "E", "G"]])
+def parse_test_figure(request):
+    return request.param
 
 
-@pytest.mark.parametrize("call_reference_figure", [REFERENCE_IMAGE, "test_bar.png"])
-def test_images_equal(call_reference_figure):
+def test_images_equal(parse_test_figure):
     """_summary_
 
     Args:
@@ -52,8 +61,9 @@ def test_images_equal(call_reference_figure):
         [1] https://www.redshiftzero.com/pytest-image/
 
     """
-    reference_image = Image.open(REFERENCE_IMAGE)
-    img2 = Image.open("test_bar.png")
+    reference_image = Image.open(str(REFERENCE_PATH / REFERENCE_IMAGE))
+    path = make_test_figure(x=parse_test_figure)
+    img2 = Image.open(path)
 
     # Convert to same mode and size for comparison
     img2 = img2.convert(reference_image.mode)
@@ -67,3 +77,8 @@ def test_images_equal(call_reference_figure):
     if sum_sq_diff != 0:
         normalized_sum_sq_diff = sum_sq_diff / np.sqrt(sum_sq_diff)
         assert normalized_sum_sq_diff < 0.001
+
+
+if __name__ == "__main__":
+    path = make_reference_figure()
+    print(path)
