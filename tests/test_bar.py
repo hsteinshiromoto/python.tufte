@@ -15,6 +15,7 @@ sys.path.append(str(PROJECT_ROOT))
 from tufte.bar import main as barplot
 
 REFERENCE_IMAGE = "reference_bar.png"
+REFERENCE_PATH = PROJECT_ROOT / "tests" / "images"
 
 
 def make_figure(x: Iterable, y: Iterable, path: Path, filename: str) -> Axes:
@@ -29,10 +30,7 @@ def make_reference_figure() -> Path:
     x = ["A", "B", "C", "D", "E", "F"]
     y = np.array([41, 23, 48, 84, 32, 38]).flatten()
 
-    path = Path(tempfile.mkdtemp())
-    filename = REFERENCE_IMAGE
-
-    make_figure(x, y, path, filename)
+    make_figure(x, y, REFERENCE_PATH, REFERENCE_IMAGE)
 
     return path
 
