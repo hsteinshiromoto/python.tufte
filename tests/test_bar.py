@@ -45,7 +45,7 @@ def make_test_figure(
     return path / filename
 
 
-@pytest.fixture(params=[["A", "B", "C", "D", "E", "F"], ["A", "B", "C", "D", "E", "G"]])
+@pytest.fixture(params=[["A", "B", "C", "D", "E", "F"], ["A", "B", "C", "D", "E", "F"]])
 def parse_test_figure(request):
     return request.param
 
