@@ -19,7 +19,7 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build_base_image:
-    name: Build Docker image and push
+    name: Build base Docker image and push
     runs-on: ubuntu-latest
     defaults:
       run:
