@@ -153,8 +153,8 @@ jobs:
       image: hsteinshiromoto/tufte:latest
 
     steps:
-      - name: Todo
-        run: echo "Todo"
+      - name: Run Pytest
+        run: pytest -s -v
 
   build_package:
     needs: [test_code]
