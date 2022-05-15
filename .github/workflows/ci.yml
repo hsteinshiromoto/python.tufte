@@ -19,7 +19,7 @@ env:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build_base_image:
-    name: Build docker image and push
+    name: Build Docker image and push
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -68,6 +68,7 @@ jobs:
               docker push $IMAGE_ID:latest
 
   build_app_image:
+    name: Build app docker image and push
     needs: [build_base_image]
     runs-on: ubuntu-latest
     defaults:
@@ -143,20 +144,19 @@ jobs:
           docker push $IMAGE_ID:latest
 
   test_code:
+    name: Test code with Pytest
     needs: [build_app_image]
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
 
-    container:
-      image: hsteinshiromoto/tufte:latest
-
     steps:
       - name: Run Pytest
         run: pytest -s -v
 
   build_package:
+    name: Build Python package
     needs: [test_code]
     runs-on: ubuntu-latest
     defaults:
@@ -184,6 +184,7 @@ jobs:
           retention-days: 90
 
   build_docs:
+    name: Build package documentation
     needs: [test_code]
     runs-on: ubuntu-latest
     defaults:
