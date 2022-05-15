@@ -68,7 +68,7 @@ jobs:
               docker push $IMAGE_ID:latest
 
   build_app_image:
-    name: Build app docker image and push
+    name: Build app Docker image and push
     needs: [build_base_image]
     runs-on: ubuntu-latest
     defaults:
