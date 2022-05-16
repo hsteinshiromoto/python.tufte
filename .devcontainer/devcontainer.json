@@ -32,7 +32,8 @@
 		"streetsidesoftware.code-spell-checker",
 		"fabiospampinato.vscode-diff",
 		"nickfode.latex-formatter",
-		"amirha.better-comments-2"
+		"amirha.better-comments-2",
+		"bungcip.better-toml"
 	],
 	// The optional 'runArgs' property can be used to specify additional runtime arguments.
 	// "runArgs": ["-u", "vscode"],
