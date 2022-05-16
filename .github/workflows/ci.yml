@@ -158,7 +158,6 @@ jobs:
       - name: Run Pytest
         run: |
           cd /home/tufte
-          ls -lah
           pytest -s -v
 
   build_package:
