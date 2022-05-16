@@ -151,6 +151,9 @@ jobs:
       run:
         shell: bash
 
+    container:
+      image: hsteinshiromoto/tufte:latest
+
     steps:
       - name: Run Pytest
         run: |
