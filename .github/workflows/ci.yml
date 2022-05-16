@@ -157,6 +157,7 @@ jobs:
     steps:
       - name: Run Pytest
         run: |
+          cd /home/tufte
           ls -lah
           pytest -s -v
 
