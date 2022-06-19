@@ -6,6 +6,7 @@ from typing import Iterable, Union
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 from matplotlib.axes import Axes
 
 PROJECT_ROOT = Path.cwd().resolve().parent
@@ -32,11 +33,14 @@ class Line(Plot):
 
     def plot(
         self,
-        x: Union[str, Iterable],
-        y: Union[str, Iterable],
-        data: pd.DataFrame = None,
-        linestyle: str = "tufte",
-        linewidth: float = 1.0,
+        x: str | Iterable | None = None,
+        y: str | Iterable | None = None,
+        hue: str | Iterable | None = None,
+        data: pd.DataFrame | None = None,
+        hue_order: Iterable | None = None,
+        estimator: str = "mean",
+        ci: int = 95,
+        linewidth: float = 2.0,
         color: str = "black",
         alpha: float = 0.9,
         ticklabelsize: int = 10,
@@ -44,37 +48,46 @@ class Line(Plot):
         **kwargs,
     ):
         x = self.fit(x, data)
-        y = self.fit(y, data)
+        y = (self.fit(y, data),)
         _ = self.get_canvas({"x": x, "y": y, "pad": 0.05})
 
-        if linestyle == "tufte":
-            # if kwargs:
-            warnings.warn("Marker options are being ignored")
-            self.ax.plot(
-                x,
-                y,
-                linestyle="-",
-                linewidth=linewidth,
-                color=color,
-                alpha=alpha,
-                zorder=1,
-            )
-            self.ax.scatter(
-                x, y, marker="o", s=markersize * 8, color="white", zorder=2  # type: ignore
-            )
-            self.ax.scatter(x, y, marker="o", s=markersize, color=color, zorder=3)  # type: ignore
+        self.ax = sns.lineplot(
+            x=x,
+            y=y,
+            hue=hue,
+            data=data,
+            hue_order=hue_order,
+            estimator=estimator,
+            ci=ci,
+            ax=self.ax,
+            **{"linewidth": linewidth, "alpha": alpha},
+        )
 
-        else:
-            self.ax.plot(
-                x,
-                y,
-                linestyle=linestyle,
-                linewidth=linewidth,
-                color=color,
-                alpha=alpha,
-                markersize=markersize**0.5,
-                **kwargs,
-            )
+        self.ax = sns.scatterplot(
+            x=x,
+            y=y,
+            data=data,
+            hue=hue,
+            marker="o",
+            estimator=estimator,
+            ci=ci,
+            size=markersize * 8,
+            color="white",
+            ax=self.ax,
+            **{"zorder": 2},  # type: ignore
+        )
+
+        self.ax = sns.scatterplot(
+            x=x,
+            y=y,
+            data=data,
+            hue=hue,
+            marker="o",
+            estimator=estimator,
+            ci=ci,
+            ax=self.ax,
+            **{"zorder": 3},  # type: ignore
+        )
 
         return self.ax
 
